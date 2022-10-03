@@ -5,7 +5,7 @@ const black = 2;
 let turn = white;
 const gameBoard = document.querySelector(".gameboard");
 const boxes = document.querySelectorAll(".box");
-gameBoard.addEventListener("click", handleClick)
+gameBoard.addEventListener("click", handleClick);
 
 // for (box = 0; box < boxes.length; box++){
 //     boxes[box].setAttribute("addEventListener", "click", createDisc(parseInt(boxes[box].id))) //=> use this id (same as index of div to reference box clicked)
@@ -24,29 +24,44 @@ let gameBoardInterface = [
   [0, 0, 0, 0, 0, 0, 0, 0],
 ];
 window.onload = function () {
-  for (box = 0; box < boxes.length; box++) {
-    boxes[box].innerHTML = "";
-    boxes[box].id = box;
-  }
+  createHTMLBoard();
   renderBoard();
 };
+
+function createHTMLBoard(col = 8, row = 8) {
+  let counter = 0;
+  for (let i = 0; i < row * col; i++) {
+    let box = document.createElement("div");
+    gameBoard.appendChild(box).className = "box";
+  }
+  for (let i = 0; i <= 7; i++) {
+    for (let j = 0; j < 8; j++) {
+      let boxId = document.querySelectorAll(".box")[counter];
+      boxId.id = `data[${i}][${j}]`;
+      counter++;
+    }
+  }
+}
 
 function renderBoard() {
   let boxIdx = 0;
   for (row = 0; row < gameBoardInterface.length; row++) {
     for (column = 0; column < gameBoardInterface.length; column++) {
       let valueAtGBI = gameBoardInterface[row][column];
+      let position = document.getElementsByClassName("box")[boxIdx];
+
       if (valueAtGBI === 0) {
       } else if (valueAtGBI === 1) {
         //change HTML to currentPlayer's value
-        boxes[boxIdx].textContent = white; // set textContent to style.backgroundcolor etc
-        boxes[boxIdx].style.backgroundColor = 'white'
-        boxes[boxIdx].style.borderRadius = '50%'
+        console.log(position, "test");
+        position.textContent = white; // set textContent to style.backgroundcolor etc
+        position.style.backgroundColor = "white";
+        position.style.borderRadius = "50%";
       } else if (valueAtGBI === 2) {
         //change HTML to currentPlayer's value
-        boxes[boxIdx].textContent = black;
-        boxes[boxIdx].style.backgroundColor = ''
-        boxes[boxIdx].style.borderRadius = '50%'
+        position.textContent = black;
+        position.style.backgroundColor = "red";
+        position.style.borderRadius = "50%";
       }
       boxIdx++;
     }
@@ -55,25 +70,30 @@ function renderBoard() {
 
 //when a box is clicked, create a disc in HTML
 function handleClick(evt) {
-    //callback flipDiscs()
-    //callback renderBoard()
-    const boxEl = evt.target;
-    //find out what was clicked
-    let boxClicked = 
-    // in the gameboardarray, set the value (1 or 2) on the board
-  boxEl.innerHTML = turn;
-  let boxIdx = 0;
-  let valueAtGBI = gameBoardInterface[row][column];
-  for (row = 0; row < gameBoardInterface.length; row++) {
-      for (column = 0; column < gameBoardInterface.length; column++) {
-          if (valueAtGBI !== 0){
+  //callback flipDiscs()
+  //callback renderBoard()
+  const boxEl = evt.target.id.replace("data", "");
+  gameBoardInterface[boxEl] = turn;
+  console.log(boxEl);
+  console.log(gameBoardInterface[boxEl]);
+  //   console.log(turn)
+  //   console.log(gameBoardInterface)
 
-              // turn === white ? turn = black : turn = white;
-              }
-
-          }
-          boxIdx++
-      }
+  renderBoard();
+  //find out what was clicked
+  //   let boxClicked =
+  // in the gameboardarray, set the value (1 or 2) on the board
+  //     (boxEl.innerHTML = turn);
+  //   let boxIdx = 0;
+  //   for (row = 0; row < gameBoardInterface.length; row++) {
+  //     for (column = 0; column < gameBoardInterface.length; column++) {
+  //       let valueAtGBI = gameBoardInterface[row][column];
+  //       if (valueAtGBI !== 0) {
+  // turn === white ? turn = black : turn = white;
+  //   }
+  // }
+  // boxIdx++;
+  //   }
 }
 
 //     let discLayer = document.createElement("div")

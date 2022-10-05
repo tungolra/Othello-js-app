@@ -41,7 +41,9 @@ next steps
   - make visible possible moves
   - display turn
   - add pass function
+    - turn display should change
   - add reset game function (to go in game results display)
+  - add endgame function
 
 - CSS
 

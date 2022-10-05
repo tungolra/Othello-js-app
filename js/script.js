@@ -1,17 +1,37 @@
 // constants
 
-const white = 1;
-const black = 2;
-let turn = white;
-const gameBoard = document.querySelector(".gameboard");
+const white = { val: 1, name: "Player 1" };
+const black = { val: 2, name: "Player 2" };
+let turn = white.val;
 const boardLayer = document.querySelector(".boardLayer");
 const boxes = document.querySelectorAll(".box");
+const whiteDiscScore = document.querySelector("#white-disc");
+const blackDiscScore = document.querySelector("#black-disc");
+const displayTurn = document.querySelector(".turn");
+const playerOneName = document.querySelector(".player-one");
+const playerTwoName = document.querySelector(".player-two");
+const endGameDisplay = document.querySelector(".endgame-display");
+
+//event listeners
+const gameBoard = document.querySelector(".gameboard");
 gameBoard.addEventListener("click", handleClick);
 
-//states
-let whiteScore = 0;
-let blackScore = 0;
+const resetGameButton = document.querySelector(".reset-game");
+resetGameButton.addEventListener("click", resetGame);
 
+const newGameButton = document.querySelector(".new-game");
+newGameButton.addEventListener("click", resetGame);
+
+const passButton = document.querySelector(".pass");
+passButton.addEventListener("click", passCounter);
+
+//initialize game
+window.onload = function () {
+  createHTMLBoard();
+  renderBoard();
+};
+
+//states
 let gameBoardInterface = [
   [0, 0, 0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0, 0, 0],
@@ -22,10 +42,36 @@ let gameBoardInterface = [
   [0, 0, 0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0, 0, 0],
 ];
-window.onload = function () {
-  createHTMLBoard();
-  renderBoard();
-};
+let whiteScore = 0;
+let blackScore = 0;
+
+function keepScore() {
+  let whiteCount = 0;
+  let blackCount = 0;
+  for (row = 0; row < gameBoardInterface.length; row++) {
+    for (column = 0; column < gameBoardInterface.length; column++) {
+      let valueAtGBI = gameBoardInterface[row][column];
+
+      if (valueAtGBI === 0) {
+      } else if (valueAtGBI === 1) {
+        whiteCount++;
+      } else if (valueAtGBI === 2) {
+        blackCount++;
+      }
+    }
+  }
+  whiteScore = whiteCount;
+  blackScore = blackCount;
+  whiteDiscScore.textContent = whiteScore;
+  blackDiscScore.textContent = blackScore;
+}
+function switchTurns() {
+  turn === white.val ? (turn = black.val) : (turn = white.val);
+}
+function passCounter() {
+  switchTurns();
+  console.log(`it's ${turn}'s turn`);
+}
 
 function createHTMLBoard(row = 8, col = 8) {
   let counter = 0;
@@ -51,42 +97,21 @@ function renderBoard() {
 
       if (valueAtGBI === 0) {
       } else if (valueAtGBI === 1) {
-        //change HTML to currentPlayer's value
-        // boxElement.style.backgroundColor = "white"
         boxElement.innerHTML = "&#9898";
-
-        // boxElement.setAttribute("svg", `width="100" height="100"`)
-        // boxElement.setAttribute("circle", `cx="50" cy="50" r="40" stroke="black" stroke-width="4" fill="black"`)
-
-        // createBoardPiece("white", boxElement);
       } else if (valueAtGBI === 2) {
         boxElement.innerHTML = "&#9899";
-        // boxElement.style.backgroundColor = "black"
-        //change HTML to currentPlayer's value
-        // createBoardPiece("black", boxElement);
       }
       boxIdx++;
     }
   }
-  keepScore();
-}
-function keepScore() {
-  let whiteCount = 0;
-  let blackCount = 0;
-  for (row = 0; row < gameBoardInterface.length; row++) {
-    for (column = 0; column < gameBoardInterface.length; column++) {
-      let valueAtGBI = gameBoardInterface[row][column];
+  turn === white.val
+    ? (displayTurn.textContent = `It's ${white.name}'s turn!`)
+    : (displayTurn.textContent = `It's ${black.name}'s turn!`);
 
-      if (valueAtGBI === 0) {
-      } else if (valueAtGBI === 1) {
-        whiteCount++;
-      } else if (valueAtGBI === 2) {
-        blackCount++;
-      }
-    }
+  keepScore();
+  if (endGame() === true) {
+    endGameDisplay.style.display = "flex";
   }
-  whiteScore = whiteCount;
-  blackScore = blackCount;
 }
 //helper functions
 function getRowCol(boxEl) {
@@ -124,9 +149,6 @@ function handleClick(evt) {
     switchTurns();
     renderBoard();
   }
-}
-function switchTurns() {
-  turn === white ? (turn = black) : (turn = white);
 }
 
 function getAffectedDiscs(row, col) {
@@ -306,4 +328,34 @@ function flipDiscs(affectedDiscs) {
   }
 }
 
-function resetGame() {}
+function resetGame() {
+  gameBoardInterface = [
+    [0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 2, 1, 0, 0, 0],
+    [0, 0, 0, 1, 2, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0],
+  ];
+  while (gameBoard.firstChild) {
+    gameBoard.removeChild(gameBoard.lastChild);
+  }
+  endGameDisplay.style.display = "none";
+  createHTMLBoard();
+  renderBoard();
+}
+function endGame() {
+  let gameboardValues = [];
+  gameBoardInterface.forEach(function (arr) {
+    for (i = 0; i < arr.length; i++) {
+      gameboardValues.push(arr[i]);
+    }
+  });
+  if (gameboardValues.indexOf(0) == -1) {
+    return true;
+  } else {
+    return false;
+  }
+}

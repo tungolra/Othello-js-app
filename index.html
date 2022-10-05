@@ -9,16 +9,34 @@
     <script defer src="js/script.js"></script>
   </head>
   <body>
-    <!-- <h1>Othello</h1>
-    <nav>
-      <ul>
-        <li>New Game</li>
-        <li>Rules</li>
-
-      </ul>
-    </nav> -->
-    <div class="container">
-      <div class="gameboard"></div>
+    <div class="header-container">
+      <h1>Othello</h1>
+      <nav>
+        <ul>
+          <li>
+            <button class="reset-game">Reset Game</button>
+          </li>
+          <li>Rules</li>
+        </ul>
+      </nav>
     </div>
+    <div class="gameboard-container">
+      <div class="player-one"> Player 1
+        <div id="white-disc">0</div>
+        <button class="pass">Pass</button>
+      </div>
+      <div class="gameboard"></div>
+      <div class="endgame-display">
+        <div>
+          <button class="new-game">Start New Game</button>
+        </div>
+      </div>
+      <div class="turn">TURN</div>
+      <div class="player-two">Player 2
+        <div id="black-disc">0</div>
+        <button class="pass">Pass</button>
+      </div>
+    </div>
+    <div class="footer">Created by: Ralph Tungol</div>
   </body>
 </html>

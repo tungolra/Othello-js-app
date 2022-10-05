@@ -24,7 +24,7 @@ let gameBoardInterface = [
 ];
 window.onload = function () {
   createHTMLBoard();
-  renderBoard();
+  initializeBoard();
 };
 
 function createHTMLBoard(row = 8, col = 8) {
@@ -42,7 +42,7 @@ function createHTMLBoard(row = 8, col = 8) {
   }
 }
 
-function renderBoard() {
+function initializeBoard() {
   let boxIdx = 0;
   for (row = 0; row < gameBoardInterface.length; row++) {
     for (column = 0; column < gameBoardInterface.length; column++) {
@@ -52,23 +52,28 @@ function renderBoard() {
       if (valueAtGBI === 0) {
       } else if (valueAtGBI === 1) {
         //change HTML to currentPlayer's value
-        // boxElement.style.backgroundColor = "white"
-        boxElement.innerHTML = "&#9898";
-
-        // boxElement.setAttribute("svg", `width="100" height="100"`)
-        // boxElement.setAttribute("circle", `cx="50" cy="50" r="40" stroke="black" stroke-width="4" fill="black"`)
-
-        // createBoardPiece("white", boxElement);
+        //
+        createBoardPiece("white", boxElement);
       } else if (valueAtGBI === 2) {
-        boxElement.innerHTML = "&#9899";
-        // boxElement.style.backgroundColor = "black"
         //change HTML to currentPlayer's value
-        // createBoardPiece("black", boxElement);
+        createBoardPiece("black", boxElement);
       }
       boxIdx++;
     }
   }
   keepScore();
+}
+function addToBoard(currentTurn, boxEl){
+    //create HTML disc
+    console.log(boxEl)
+    if (currentTurn === white){
+        createBoardPiece("white", boxEl)
+    }
+    if (currentTurn === black){
+        createBoardPiece("black", boxEl)
+
+    }
+    switchTurns();
 }
 function keepScore() {
   let whiteCount = 0;
@@ -76,7 +81,6 @@ function keepScore() {
   for (row = 0; row < gameBoardInterface.length; row++) {
     for (column = 0; column < gameBoardInterface.length; column++) {
       let valueAtGBI = gameBoardInterface[row][column];
-
       if (valueAtGBI === 0) {
       } else if (valueAtGBI === 1) {
         whiteCount++;
@@ -91,19 +95,41 @@ function keepScore() {
 
 // functions
 //when a box is clicked, create a disc in HTML
+function createBoardPiece(colour, boxElement) {
+  if (colour === "white") {
+    let piece = document.createElement("div");
+    piece.className = "piece";
+    piece.style.width = "45px";
+    piece.style.height = "45px";
+    piece.style.backgroundColor = "white";
+    piece.style.borderRadius = "50%";
+    boxElement.appendChild(piece);
+  }
+  if (colour === "black") {
+    let piece = document.createElement("div");
+    piece.style.width = "45px";
+    piece.style.height = "45px";
+    piece.style.backgroundColor = "black";
+    piece.style.borderRadius = "50%";
+
+    boxElement.appendChild(piece);
+  }
+}
 
 function handleClick(evt) {
   //find out what was clicked
   const boxEl = evt.target;
   const [row, col] = getRowCol(boxEl);
+  let currentTurn = turn
   if (gameBoardInterface[(row, col)] !== 0) {
   }
   if (canClickSpot(row, col) == true) {
     let affectedDiscs = getAffectedDiscs(row, col);
+    addToBoard(currentTurn, boxEl);
     flipDiscs(affectedDiscs);
     gameBoardInterface[row][col] = turn;
-    switchTurns();
-    renderBoard();
+    // switchTurns();
+    // initializeBoard()
   }
 }
 function getRowCol(boxEl) {
@@ -139,7 +165,7 @@ function getAffectedDiscs(row, col) {
         affectedDiscs = affectedDiscs.concat(couldBeAffected);
       }
       break;
-    } else if (adjacentValues != turn) {
+    } else {
       // if the adjacentValues is opposite colour and it's not a 0, then add to couldBeAffected
       let adjacentValuesboxElement = { row: row, col: columnIterator };
       couldBeAffected.push(adjacentValuesboxElement);
@@ -158,7 +184,7 @@ function getAffectedDiscs(row, col) {
         affectedDiscs = affectedDiscs.concat(couldBeAffected);
       }
       break;
-    } else if (adjacentValues != turn) {
+    } else {
       // if the adjacentValues is opposite colour and it's not a 0, then add to couldBeAffected
       let adjacentValuesboxElement = { row: row, col: columnIterator };
       couldBeAffected.push(adjacentValuesboxElement);
@@ -177,7 +203,7 @@ function getAffectedDiscs(row, col) {
         affectedDiscs = affectedDiscs.concat(couldBeAffected);
       }
       break;
-    } else if (adjacentValues != turn) {
+    } else {
       // if the adjacentValues is opposite colour and it's not a 0, then add to couldBeAffected
       let adjacentValuesboxElement = { row: rowIterator, col: col };
       couldBeAffected.push(adjacentValuesboxElement);
@@ -196,7 +222,7 @@ function getAffectedDiscs(row, col) {
         affectedDiscs = affectedDiscs.concat(couldBeAffected);
       }
       break;
-    } else if (adjacentValues != turn) {
+    } else {
       // if the adjacentValues is opposite colour and it's not a 0, then add to couldBeAffected
       let adjacentValuesboxElement = { row: rowIterator, col: col };
       couldBeAffected.push(adjacentValuesboxElement);
@@ -213,11 +239,11 @@ function getAffectedDiscs(row, col) {
     //if value at spot is 0 or turn's colour, then stop moving right
     if (adjacentValues == 0 || adjacentValues == turn) {
       //before we break out of loop, add to affectedDiscs to be flipped
-      if (adjacentValues == turn) {
-        affectedDiscs = affectedDiscs.concat(couldBeAffected);
-      }
+      //   if (adjacentValues == turn) {
+      //     affectedDiscs = affectedDiscs.concat(couldBeAffected);
+      //   }
       break;
-    } else if (adjacentValues != turn) {
+    } else {
       // if the adjacentValues is opposite colour and it's not a 0, then add to couldBeAffected
       let adjacentValuesboxElement = { row: rowIterator, col: colIterator };
       couldBeAffected.push(adjacentValuesboxElement);
@@ -238,7 +264,7 @@ function getAffectedDiscs(row, col) {
         affectedDiscs = affectedDiscs.concat(couldBeAffected);
       }
       break;
-    } else if (adjacentValues != turn) {
+    } else {
       // if the adjacentValues is opposite colour and it's not a 0, then add to couldBeAffected
       let adjacentValuesboxElement = { row: rowIterator, col: colIterator };
       couldBeAffected.push(adjacentValuesboxElement);
@@ -259,7 +285,7 @@ function getAffectedDiscs(row, col) {
         affectedDiscs = affectedDiscs.concat(couldBeAffected);
       }
       break;
-    } else if (adjacentValues != turn) {
+    } else {
       // if the adjacentValues is opposite colour and it's not a 0, then add to couldBeAffected
       let adjacentValuesboxElement = { row: rowIterator, col: colIterator };
       couldBeAffected.push(adjacentValuesboxElement);
@@ -281,7 +307,7 @@ function getAffectedDiscs(row, col) {
         affectedDiscs = affectedDiscs.concat(couldBeAffected);
       }
       break;
-    } else if (adjacentValues != turn) {
+    } else {
       // if the adjacentValues is opposite colour and it's not a 0, then add to couldBeAffected
       let adjacentValuesboxElement = { row: rowIterator, col: colIterator };
       couldBeAffected.push(adjacentValuesboxElement);
@@ -294,17 +320,17 @@ function flipDiscs(affectedDiscs) {
   for (let i = 0; i < affectedDiscs.length; i++) {
     let toBeFlipped = affectedDiscs[i];
 
-    let toBeRemoved = document.querySelector(
-      `#data-${affectedDiscs.row}${affectedDiscs.col}`
-    );
+    let row = toBeFlipped.row
+    let col = toBeFlipped.col
+
+    let removeOriginalPiece = document.querySelector(`#data-${row}${col}`);
+
+    //   removeOriginalPiece.removeChild(toBeFlipped.firstElementChild);
     if (gameBoardInterface[toBeFlipped.row][toBeFlipped.col] == 1) {
-      // toBeRemoved.removeChild(".piece");
       gameBoardInterface[toBeFlipped.row][toBeFlipped.col] = 2;
     } else {
-      // toBeRemoved.removeChild(".piece");
+    //   removeOriginalPiece.removeChild(toBeFlipped.firstElementChild);
       gameBoardInterface[toBeFlipped.row][toBeFlipped.col] = 1;
     }
   }
 }
-
-function resetGame() {}

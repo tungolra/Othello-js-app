@@ -88,7 +88,26 @@ function keepScore() {
   whiteScore = whiteCount;
   blackScore = blackCount;
 }
+//helper functions
+function getRowCol(boxEl) {
+  let rowCol = boxEl.id.replace("data-", "");
+  let row = parseInt(rowCol[0]);
+  let col = parseInt(rowCol[1]);
+  return [row, col];
+}
+function canClickSpot(row, col) {
+  let affectedDiscs = getAffectedDiscs(row, col);
+  //OR IF BOX CONTAINS VALUE...
+  let [r, c] = [row, col];
+  let noClick = document.querySelector(`#data-${row}${col}`);
 
+  if (affectedDiscs.length == 0) {
+    // console.log(gameBoardInterface[0][(r, c)]);
+    return false;
+  } else {
+    return true;
+  }
+}
 // functions
 //when a box is clicked, create a disc in HTML
 
@@ -96,9 +115,9 @@ function handleClick(evt) {
   //find out what was clicked
   const boxEl = evt.target;
   const [row, col] = getRowCol(boxEl);
-  if (gameBoardInterface[(row, col)] !== 0) {
-  }
-  if (canClickSpot(row, col) == true) {
+  console.log(gameBoardInterface[row][col]);
+  if (gameBoardInterface[row][col] !== 0) {
+  } else if (canClickSpot(row, col) == true) {
     let affectedDiscs = getAffectedDiscs(row, col);
     flipDiscs(affectedDiscs);
     gameBoardInterface[row][col] = turn;
@@ -106,24 +125,10 @@ function handleClick(evt) {
     renderBoard();
   }
 }
-function getRowCol(boxEl) {
-  let rowCol = boxEl.id.replace("data-", "");
-  let row = parseInt(rowCol[0]);
-  let col = parseInt(rowCol[1]);
-  return [row, col];
-}
 function switchTurns() {
   turn === white ? (turn = black) : (turn = white);
 }
 
-function canClickSpot(row, col) {
-  let affectedDiscs = getAffectedDiscs(row, col);
-  if (affectedDiscs.length == 0) {
-    return false;
-  } else {
-    return true;
-  }
-}
 function getAffectedDiscs(row, col) {
   //check to the right of click
   let affectedDiscs = [];
@@ -293,15 +298,9 @@ function getAffectedDiscs(row, col) {
 function flipDiscs(affectedDiscs) {
   for (let i = 0; i < affectedDiscs.length; i++) {
     let toBeFlipped = affectedDiscs[i];
-
-    let toBeRemoved = document.querySelector(
-      `#data-${affectedDiscs.row}${affectedDiscs.col}`
-    );
     if (gameBoardInterface[toBeFlipped.row][toBeFlipped.col] == 1) {
-      // toBeRemoved.removeChild(".piece");
       gameBoardInterface[toBeFlipped.row][toBeFlipped.col] = 2;
     } else {
-      // toBeRemoved.removeChild(".piece");
       gameBoardInterface[toBeFlipped.row][toBeFlipped.col] = 1;
     }
   }

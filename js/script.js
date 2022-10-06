@@ -24,7 +24,8 @@ const newGameButton = document.querySelector(".new-game");
 newGameButton.addEventListener("click", resetGame);
 
 const passButton = document.querySelector(".pass");
-passButton.addEventListener("click", passCounter);
+// passButton.addEventListener("click", passCounter);
+passButton.addEventListener("click", validatePass);
 
 const rulesPage = document.querySelector(".rules-page");
 const rulesButton = document.querySelector(".rules");
@@ -79,16 +80,19 @@ function switchTurns() {
   resetPossibleMoves();
 }
 function showPossibleMoves() {
+  let countPossibleMoves = 0
   for (row = 0; row < gameBoardInterface.length; row++) {
     for (col = 0; col < gameBoardInterface.length; col++) {
       if (canClickSpot(row, col) && gameBoardInterface[row][col] == 0) {
         let possibleMoves = document.querySelector(`#data-${row}${col}`);
         possibleMoves.style.opacity = "0.7";
         possibleMoves.classList.add("bool-true");
-        //set attribute to possible box
+        countPossibleMoves++
+        
       }
     }
   }
+  validatePass(countPossibleMoves)
 }
 
 //initialize game
@@ -118,8 +122,7 @@ function renderBoard() {
       let valueAtGBI = gameBoardInterface[row][column];
       let boxElement = document.getElementsByClassName("box")[boxIdx];
 
-      if (valueAtGBI === 0) {
-      } else if (valueAtGBI === 1) {
+      if (valueAtGBI === 1) {
         boxElement.innerHTML = "&#9898";
       } else if (valueAtGBI === 2) {
         boxElement.innerHTML = "&#9899";
@@ -144,16 +147,26 @@ function renderBoard() {
       : whiteScore > blackScore
       ? (displayText.textContent = `${white.name} wins!`)
       : (displayText.textContent = `${black.name} wins!`);
+      
   }
   showPossibleMoves();
 }
 
 //helper functions
-function passCounter() {
-  switchTurns();
-  resetPossibleMoves();
-  renderBoard();
-}
+function validatePass(countPossibleMoves){
+  // console.log(countPossibleMoves)
+  if (countPossibleMoves === 0){
+    switchTurns();
+    resetPossibleMoves();
+    renderBoard();
+  } 
+//   else{
+//    console.log('theres still moves left!')
+
+//    return
+//  }
+ }
+
 function getRowCol(boxEl) {
   let rowCol = boxEl.id.replace("data-", "");
   let row = parseInt(rowCol[0]);
@@ -163,7 +176,7 @@ function getRowCol(boxEl) {
 function canClickSpot(row, col) {
   let affectedDiscs = getAffectedDiscs(row, col);
   // console.log(affectedDiscs)
-  if (affectedDiscs.length == 0) {
+  if (affectedDiscs.length == 0 && gameBoardInterface[row][col] === 0) {
     return false;
   } else {
     return true;
@@ -386,7 +399,7 @@ function endGame() {
       gameboardValues.push(arr[i]);
     }
   });
-  if (gameboardValues.indexOf(0) == -1) {
+  if (gameboardValues.indexOf(0) == -1 || gameboardValues.indexOf(1) == -1 || gameboardValues.indexOf(2) == -1) {
     return true;
   } else {
     return false;

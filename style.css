@@ -222,7 +222,6 @@ footer {
 }
 a { 
     display: flex;
-    align-self;
     height: 50%;
     margin-right: 20px;
 }

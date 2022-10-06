@@ -11,6 +11,7 @@ const playerOneName = document.querySelector(".player-one");
 const playerTwoName = document.querySelector(".player-two");
 const endGameDisplay = document.querySelector(".endgame-display");
 const displayText = document.querySelector(".display-text");
+const possibleMoves = document.querySelectorAll(".bool-true");
 
 //event listeners
 const gameBoard = document.querySelector(".gameboard");
@@ -22,8 +23,12 @@ resetGameButton.addEventListener("click", resetGame);
 const newGameButton = document.querySelector(".new-game");
 newGameButton.addEventListener("click", resetGame);
 
-const passButton = document.querySelector(".pass1");
+const passButton = document.querySelector(".pass");
 passButton.addEventListener("click", passCounter);
+
+const rulesPage = document.querySelector(".rules-page");
+const rulesButton = document.querySelector(".rules");
+rulesButton.addEventListener("click", displayRulesPage);
 
 //states
 let gameBoardInterface = [
@@ -60,8 +65,30 @@ function keepScore() {
   whiteDiscScore.textContent = whiteScore;
   blackDiscScore.textContent = blackScore;
 }
+function resetPossibleMoves() {
+  let list = [];
+  document.querySelectorAll(".bool-true").forEach(function (div) {
+    list.push(div);
+  });
+  list.forEach(function (div) {
+    document.getElementById(`${div.id}`).style.opacity = "1";
+  });
+}
 function switchTurns() {
   turn === white.val ? (turn = black.val) : (turn = white.val);
+  resetPossibleMoves();
+}
+function showPossibleMoves() {
+  for (row = 0; row < gameBoardInterface.length; row++) {
+    for (col = 0; col < gameBoardInterface.length; col++) {
+      if (canClickSpot(row, col) && gameBoardInterface[row][col] == 0) {
+        let possibleMoves = document.querySelector(`#data-${row}${col}`);
+        possibleMoves.style.opacity = "0.7";
+        possibleMoves.classList.add("bool-true");
+        //set attribute to possible box
+      }
+    }
+  }
 }
 
 //initialize game
@@ -112,7 +139,9 @@ function renderBoard() {
   keepScore();
   if (endGame() === true) {
     endGameDisplay.style.display = "flex";
-    whiteScore > blackScore
+    whiteScore === blackScore
+      ? (displayText.textContent = `It's a tie!`)
+      : whiteScore > blackScore
       ? (displayText.textContent = `${white.name} wins!`)
       : (displayText.textContent = `${black.name} wins!`);
   }
@@ -122,6 +151,7 @@ function renderBoard() {
 //helper functions
 function passCounter() {
   switchTurns();
+  resetPossibleMoves();
   renderBoard();
 }
 function getRowCol(boxEl) {
@@ -132,7 +162,7 @@ function getRowCol(boxEl) {
 }
 function canClickSpot(row, col) {
   let affectedDiscs = getAffectedDiscs(row, col);
-
+  // console.log(affectedDiscs)
   if (affectedDiscs.length == 0) {
     return false;
   } else {
@@ -362,65 +392,10 @@ function endGame() {
     return false;
   }
 }
-function showPossibleMoves() {
-  console.log(`i ran`);
-  let playersPiece = turn.val;
-  if (turn === black.val) {
-    console.log(`black`);
-    let whiteMoves = [];
-    for (row = 0; row < gameBoardInterface.length; row++) {
-      for (col = 0; col < gameBoardInterface.length; col++) {
-        console.log(gameBoardInterface[row + 1][col]);
-        // console.log(`i: ${gameBoardInterface[(row - 1)][(col - 1)]}`)
-        if (
-          gameBoardInterface[row][col] == 0 &&
-          gameBoardInterface[row - 1][col - 1] !== playersPiece &&
-          gameBoardInterface[row - 1][col - 1] !== 0
-        ) {
-          whiteMoves.push([row - 1][col - 1]);
-        }
-        console.log(whiteMoves);
-      }
-    }
-  }
+// let possibleMove = document.querySelector()
+
+function displayRulesPage() {
+  rulesPage.style.display === "none"
+    ? (rulesPage.style.display = "initial")
+    : (rulesPage.style.display = "none");
 }
-
-// function showPossibleMoves() {
-//   let playersPiece = turn.val;
-//   if (turn === white) {
-//     let whiteMoves = []
-//     for (row = 0; row < gameBoardInterface.length; row++) {
-//       for (col = 0; col < gameBoardInterface.length; col++) {
-//         let box = gameBoardInterface[row][col];
-//         if (box === 0) {
-//         }if (
-//           (gameBoardInterface[row - 1][col - 1] !== playersPiece &&
-//             gameBoardInterface[row - 1][col - 1] !== 0){
-//               whiteMoves.push([row - 1][col - 1])
-//             }
-//           // (gameBoardInterface[row - 1][col] !== playersPiece &&
-//           //   gameBoardInterface[row - 1][col] !== 0) ||
-//           // (gameBoardInterface[row - 1][col + 1] !== playersPiece &&
-//           //   gameBoardInterface[row - 1][col + 1] !== 0) ||
-//           // (gameBoardInterface[row][col + 1] !== playersPiece &&
-//           //   gameBoardInterface[row][col + 1] !== 0) ||
-//           // (gameBoardInterface[row + 1][col + 1] !== playersPiece &&
-//           //   gameBoardInterface[row + 1][col + 1] !== 0) ||
-//           // (gameBoardInterface[row + 1][col] !== playersPiece &&
-//           //   gameBoardInterface[row + 1][col] !== 0) ||
-//           // (gameBoardInterface[row + 1][col - 1] !== playersPiece &&
-//           //   gameBoardInterface[row + 1][col - 1] !== 0) ||
-//           // (gameBoardInterface[row][col - 1] !== playersPiece &&
-//           //   gameBoardInterface[row][col - 1] !== 0)
-
-//           //have gameboardinterface[n][n] display on board
-//         }
-
-//         // starting at [0][0]
-
-//         // if (gameBoardInterface[row][col] === adjacentPiece || gameBoardInterface[row][col + 1] === 0 || gameBoardInterface[row][col + 1] === 'undefined'){
-
-//         // }
-//       }
-//     }
-//   }

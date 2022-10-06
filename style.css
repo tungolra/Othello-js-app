@@ -10,58 +10,77 @@ body {
   font-family: "Silkscreen", cursive;
   font-size: 18px;
 }
-span {
-  color: white;
-}
 header {
-  display: flex;
-  justify-content: center;
-
-  font-family: "Bungee Inline", cursive;
-  font-size: 30px;
-}
-h1 {
-  margin: auto;
+    display: flex;
+    justify-content: center;
+  
+    font-family: "Bungee Inline", cursive;
+    font-size: 30px;
+  }
+  h1 {
+    margin: auto;
+  }
+span {
+    color: white;
 }
 .options-container {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-evenly;
-  margin: auto;
-  align-items: center;
-  width: 700px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    margin: auto;
+    align-items: center;
+    width: 700px;
+  }
+  .rules {
+    color: black;
+    border: 1px solid black;
+    padding: 10px 10px;
+    border-radius: 15px;
 }
+.rules-page {
+    display: none;
+    position: fixed;
+    right: 0;
+    bottom: 1;
+    margin-top: 650px;
+    margin-right: 100px;
+    color: white;
+    background-color: rgba(0, 128, 0, 0.647);
+    border: 3px solid white;
+    width: 400px;
+    padding: 5px 8px;
+    border-radius: 10px;
+    font-size: 12px;
+  }
+  .rules-page > p {
+    margin: 8px 0;
+  }
+  h3 {
+    color: black;
+    font-size: 18px;
+  }
 
-.options-container > div {
-  position: absolute;
-  color: white;
-  background-color: black;
-  padding: 5px 8px;
-  border-radius: 10px;
-  display: none;
-  z-index: 1;
-}
-span:hover + div {
-  display: block;
-}
-span div::after {
-  content: "";
-  position: absolute;
-  top: 100%;
-  left: 50%;
-  margin-left: -5px;
-  border-width: 5px;
-  border-style: solid;
-  border-color: #555 transparent transparent transparent;
-}
+/* .rules:hover + .rules-page {
+    display: flex;
+} */
+/* .rules div::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #555 transparent transparent transparent; */
+/* } */
 
-ul {
-  list-style-type: none;
-}
 .reset-game {
-  border-radius: 20px;
-  list-style-type: none;
-}
+    border-radius: 15px;
+  }
+
+
+
+
 .gameboard-container {
   display: flex;
   flex-wrap: wrap;
@@ -188,17 +207,24 @@ button {
   color: white;
   background-color: black;
 }
+.bool-true {}
 
-.footer {
+footer {
   display: flex;
   width: 100vw;
   height: 10vh;
   justify-content: center;
   align-items: center;
-  background-color: black;
+  background-color: rgb(0, 0, 0);
   color: white;
   position: fixed;
   bottom: 0;
+}
+a { 
+    display: flex;
+    align-self;
+    height: 50%;
+    margin-right: 20px;
 }
 .endgame-display {
   display: none;
@@ -218,7 +244,6 @@ button {
 }
 .display-text {
   display: flex;
-  align-self: flex-start;
   margin: 20px 0 0 10px;
   font-size: 20px;
 }

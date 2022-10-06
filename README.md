@@ -39,6 +39,7 @@ next steps
     - turn display should change
   - add reset game function (to go in game results display)
   - add endgame function
+  - allow players to change name
 
 - CSS
 
@@ -65,3 +66,5 @@ next steps
 - option to add own name
 - option to choose avatar
 - add fullscreen option
+- add AI 
+- display timer

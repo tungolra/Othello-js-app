@@ -7,36 +7,48 @@
     <title>Othello</title>
     <link rel="stylesheet" href="style.css" />
     <script defer src="js/script.js"></script>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Bungee+Inline&display=swap");
+      @import url("https://fonts.googleapis.com/css2?family=Bungee+Inline&family=Silkscreen&display=swap");
+    </style>
   </head>
   <body>
-    <div class="header-container">
-      <h1>Othello</h1>
-      <nav>
-        <ul>
-          <li>
-            <button class="reset-game">Reset Game</button>
-          </li>
-          <li>Rules</li>
-        </ul>
-      </nav>
+    <header>
+      <h1><span>OTH</span>ELLO</h1>
+    </header>
+    <div class="options-container">
+      <button class="reset-game">Reset Game</button>
+      <button class="pass1">Pass</button>
+      <span>Rules</span>
+      <div>
+        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quia,
+        accusamus! Excepturi culpa odio officia esse, accusamus molestias dicta
+        harum ipsa accusantium obcaecati. Consequuntur tempora natus in.
+        Doloribus quas ab iure! Lorem ipsum dolor sit amet consectetur
+        adipisicing elit. Temporibus expedita dolore consequuntur impedit
+        veritatis perferendis distinctio corrupti ducimus molestias aliquid
+        velit cupiditate maxime in provident, consequatur, neque laudantium vero
+        pariatur.
+      </div>
     </div>
     <div class="gameboard-container">
-      <div class="player-one"> Player 1
+      <div class="player-one-container">
+        <div class="player-one">Player 1</div>
         <div id="white-disc">0</div>
-        <button class="pass">Pass</button>
       </div>
       <div class="gameboard"></div>
       <div class="endgame-display">
-        <div>
+        <div class="display-container">
+          <div class="display-text">Example Text</div>
           <button class="new-game">Start New Game</button>
         </div>
       </div>
-      <div class="turn">TURN</div>
-      <div class="player-two">Player 2
+      <div class="turn"></div>
+      <div class="player-two-container">
         <div id="black-disc">0</div>
-        <button class="pass">Pass</button>
+        <div class="player-two">Player 2</div>
       </div>
     </div>
-    <div class="footer">Created by: Ralph Tungol</div>
+    <div class="footer">Created by: Ralph Tu&ntildegol</div>
   </body>
 </html>

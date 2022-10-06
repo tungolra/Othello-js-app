@@ -2,7 +2,6 @@
 
 const white = { val: 1, name: "Player 1" };
 const black = { val: 2, name: "Player 2" };
-let turn = white.val;
 const boardLayer = document.querySelector(".boardLayer");
 const boxes = document.querySelectorAll(".box");
 const whiteDiscScore = document.querySelector("#white-disc");
@@ -11,6 +10,7 @@ const displayTurn = document.querySelector(".turn");
 const playerOneName = document.querySelector(".player-one");
 const playerTwoName = document.querySelector(".player-two");
 const endGameDisplay = document.querySelector(".endgame-display");
+const displayText = document.querySelector(".display-text");
 
 //event listeners
 const gameBoard = document.querySelector(".gameboard");
@@ -22,14 +22,8 @@ resetGameButton.addEventListener("click", resetGame);
 const newGameButton = document.querySelector(".new-game");
 newGameButton.addEventListener("click", resetGame);
 
-const passButton = document.querySelector(".pass");
+const passButton = document.querySelector(".pass1");
 passButton.addEventListener("click", passCounter);
-
-//initialize game
-window.onload = function () {
-  createHTMLBoard();
-  renderBoard();
-};
 
 //states
 let gameBoardInterface = [
@@ -44,6 +38,7 @@ let gameBoardInterface = [
 ];
 let whiteScore = 0;
 let blackScore = 0;
+let turn = white.val;
 
 function keepScore() {
   let whiteCount = 0;
@@ -68,11 +63,12 @@ function keepScore() {
 function switchTurns() {
   turn === white.val ? (turn = black.val) : (turn = white.val);
 }
-function passCounter() {
-  switchTurns();
-  console.log(`it's ${turn}'s turn`);
-}
 
+//initialize game
+window.onload = function () {
+  createHTMLBoard();
+  renderBoard();
+};
 function createHTMLBoard(row = 8, col = 8) {
   let counter = 0;
   for (let i = 0; i < row * col; i++) {
@@ -104,16 +100,30 @@ function renderBoard() {
       boxIdx++;
     }
   }
-  turn === white.val
-    ? (displayTurn.textContent = `It's ${white.name}'s turn!`)
-    : (displayTurn.textContent = `It's ${black.name}'s turn!`);
-
+  if (turn === white.val) {
+    displayTurn.textContent = `It's ${white.name}'s turn!`;
+    blackDiscScore.style.boxShadow = "none";
+    whiteDiscScore.style.boxShadow = "0 0 40px 20px #FFD700";
+  } else {
+    displayTurn.textContent = `It's ${black.name}'s turn!`;
+    whiteDiscScore.style.boxShadow = "none";
+    blackDiscScore.style.boxShadow = "0 0 40px 20px #FFD700";
+  }
   keepScore();
   if (endGame() === true) {
     endGameDisplay.style.display = "flex";
+    whiteScore > blackScore
+      ? (displayText.textContent = `${white.name} wins!`)
+      : (displayText.textContent = `${black.name} wins!`);
   }
+  showPossibleMoves();
 }
+
 //helper functions
+function passCounter() {
+  switchTurns();
+  renderBoard();
+}
 function getRowCol(boxEl) {
   let rowCol = boxEl.id.replace("data-", "");
   let row = parseInt(rowCol[0]);
@@ -122,25 +132,18 @@ function getRowCol(boxEl) {
 }
 function canClickSpot(row, col) {
   let affectedDiscs = getAffectedDiscs(row, col);
-  //OR IF BOX CONTAINS VALUE...
-  let [r, c] = [row, col];
-  let noClick = document.querySelector(`#data-${row}${col}`);
 
   if (affectedDiscs.length == 0) {
-    // console.log(gameBoardInterface[0][(r, c)]);
     return false;
   } else {
     return true;
   }
 }
 // functions
-//when a box is clicked, create a disc in HTML
 
 function handleClick(evt) {
-  //find out what was clicked
   const boxEl = evt.target;
   const [row, col] = getRowCol(boxEl);
-  console.log(gameBoardInterface[row][col]);
   if (gameBoardInterface[row][col] !== 0) {
   } else if (canClickSpot(row, col) == true) {
     let affectedDiscs = getAffectedDiscs(row, col);
@@ -166,7 +169,7 @@ function getAffectedDiscs(row, col) {
         affectedDiscs = affectedDiscs.concat(couldBeAffected);
       }
       break;
-    } else if (adjacentValues != turn) {
+    } else {
       // if the adjacentValues is opposite colour and it's not a 0, then add to couldBeAffected
       let adjacentValuesboxElement = { row: row, col: columnIterator };
       couldBeAffected.push(adjacentValuesboxElement);
@@ -185,7 +188,7 @@ function getAffectedDiscs(row, col) {
         affectedDiscs = affectedDiscs.concat(couldBeAffected);
       }
       break;
-    } else if (adjacentValues != turn) {
+    } else {
       // if the adjacentValues is opposite colour and it's not a 0, then add to couldBeAffected
       let adjacentValuesboxElement = { row: row, col: columnIterator };
       couldBeAffected.push(adjacentValuesboxElement);
@@ -204,7 +207,7 @@ function getAffectedDiscs(row, col) {
         affectedDiscs = affectedDiscs.concat(couldBeAffected);
       }
       break;
-    } else if (adjacentValues != turn) {
+    } else {
       // if the adjacentValues is opposite colour and it's not a 0, then add to couldBeAffected
       let adjacentValuesboxElement = { row: rowIterator, col: col };
       couldBeAffected.push(adjacentValuesboxElement);
@@ -223,7 +226,7 @@ function getAffectedDiscs(row, col) {
         affectedDiscs = affectedDiscs.concat(couldBeAffected);
       }
       break;
-    } else if (adjacentValues != turn) {
+    } else {
       // if the adjacentValues is opposite colour and it's not a 0, then add to couldBeAffected
       let adjacentValuesboxElement = { row: rowIterator, col: col };
       couldBeAffected.push(adjacentValuesboxElement);
@@ -244,7 +247,7 @@ function getAffectedDiscs(row, col) {
         affectedDiscs = affectedDiscs.concat(couldBeAffected);
       }
       break;
-    } else if (adjacentValues != turn) {
+    } else {
       // if the adjacentValues is opposite colour and it's not a 0, then add to couldBeAffected
       let adjacentValuesboxElement = { row: rowIterator, col: colIterator };
       couldBeAffected.push(adjacentValuesboxElement);
@@ -265,7 +268,7 @@ function getAffectedDiscs(row, col) {
         affectedDiscs = affectedDiscs.concat(couldBeAffected);
       }
       break;
-    } else if (adjacentValues != turn) {
+    } else {
       // if the adjacentValues is opposite colour and it's not a 0, then add to couldBeAffected
       let adjacentValuesboxElement = { row: rowIterator, col: colIterator };
       couldBeAffected.push(adjacentValuesboxElement);
@@ -286,7 +289,7 @@ function getAffectedDiscs(row, col) {
         affectedDiscs = affectedDiscs.concat(couldBeAffected);
       }
       break;
-    } else if (adjacentValues != turn) {
+    } else {
       // if the adjacentValues is opposite colour and it's not a 0, then add to couldBeAffected
       let adjacentValuesboxElement = { row: rowIterator, col: colIterator };
       couldBeAffected.push(adjacentValuesboxElement);
@@ -308,7 +311,7 @@ function getAffectedDiscs(row, col) {
         affectedDiscs = affectedDiscs.concat(couldBeAffected);
       }
       break;
-    } else if (adjacentValues != turn) {
+    } else {
       // if the adjacentValues is opposite colour and it's not a 0, then add to couldBeAffected
       let adjacentValuesboxElement = { row: rowIterator, col: colIterator };
       couldBeAffected.push(adjacentValuesboxElement);
@@ -359,3 +362,65 @@ function endGame() {
     return false;
   }
 }
+function showPossibleMoves() {
+  console.log(`i ran`);
+  let playersPiece = turn.val;
+  if (turn === black.val) {
+    console.log(`black`);
+    let whiteMoves = [];
+    for (row = 0; row < gameBoardInterface.length; row++) {
+      for (col = 0; col < gameBoardInterface.length; col++) {
+        console.log(gameBoardInterface[row + 1][col]);
+        // console.log(`i: ${gameBoardInterface[(row - 1)][(col - 1)]}`)
+        if (
+          gameBoardInterface[row][col] == 0 &&
+          gameBoardInterface[row - 1][col - 1] !== playersPiece &&
+          gameBoardInterface[row - 1][col - 1] !== 0
+        ) {
+          whiteMoves.push([row - 1][col - 1]);
+        }
+        console.log(whiteMoves);
+      }
+    }
+  }
+}
+
+// function showPossibleMoves() {
+//   let playersPiece = turn.val;
+//   if (turn === white) {
+//     let whiteMoves = []
+//     for (row = 0; row < gameBoardInterface.length; row++) {
+//       for (col = 0; col < gameBoardInterface.length; col++) {
+//         let box = gameBoardInterface[row][col];
+//         if (box === 0) {
+//         }if (
+//           (gameBoardInterface[row - 1][col - 1] !== playersPiece &&
+//             gameBoardInterface[row - 1][col - 1] !== 0){
+//               whiteMoves.push([row - 1][col - 1])
+//             }
+//           // (gameBoardInterface[row - 1][col] !== playersPiece &&
+//           //   gameBoardInterface[row - 1][col] !== 0) ||
+//           // (gameBoardInterface[row - 1][col + 1] !== playersPiece &&
+//           //   gameBoardInterface[row - 1][col + 1] !== 0) ||
+//           // (gameBoardInterface[row][col + 1] !== playersPiece &&
+//           //   gameBoardInterface[row][col + 1] !== 0) ||
+//           // (gameBoardInterface[row + 1][col + 1] !== playersPiece &&
+//           //   gameBoardInterface[row + 1][col + 1] !== 0) ||
+//           // (gameBoardInterface[row + 1][col] !== playersPiece &&
+//           //   gameBoardInterface[row + 1][col] !== 0) ||
+//           // (gameBoardInterface[row + 1][col - 1] !== playersPiece &&
+//           //   gameBoardInterface[row + 1][col - 1] !== 0) ||
+//           // (gameBoardInterface[row][col - 1] !== playersPiece &&
+//           //   gameBoardInterface[row][col - 1] !== 0)
+
+//           //have gameboardinterface[n][n] display on board
+//         }
+
+//         // starting at [0][0]
+
+//         // if (gameBoardInterface[row][col] === adjacentPiece || gameBoardInterface[row][col + 1] === 0 || gameBoardInterface[row][col + 1] === 'undefined'){
+
+//         // }
+//       }
+//     }
+//   }

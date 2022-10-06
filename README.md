@@ -22,7 +22,6 @@ functions
 - handleClick function to:
   - possible moves in the array
     - boxes not clicked && selection is adjacent to opponent's piece
-    -
   - switch players
   - value of tokens must change
 - check status function
@@ -30,10 +29,6 @@ functions
   - or if board is filled
 
 next steps
-
-- ReadMe
-
-  - add pseudocode
 
 - JS
 
@@ -49,17 +44,21 @@ next steps
 
   - add header
   - center board
+  - change cursor at turn
+  - add pop up text for rules
 
 - HTML
 
   - static button to start new game (calls on reset game function)
   - button to reset game
   - scoreboard div
-  - add rules page
+  - add rules text
   - add footer
   - add link to github
   - button for pass function
   - add display board for game results
+  - add github link
+  - add linkedin link
 
 - Extras
 - animate flipping of discs

@@ -80,19 +80,18 @@ function switchTurns() {
   resetPossibleMoves();
 }
 function showPossibleMoves() {
-  let countPossibleMoves = 0
+  let countPossibleMoves = 0;
   for (row = 0; row < gameBoardInterface.length; row++) {
     for (col = 0; col < gameBoardInterface.length; col++) {
       if (canClickSpot(row, col) && gameBoardInterface[row][col] == 0) {
         let possibleMoves = document.querySelector(`#data-${row}${col}`);
         possibleMoves.style.opacity = "0.7";
         possibleMoves.classList.add("bool-true");
-        countPossibleMoves++
-        
+        countPossibleMoves++;
       }
     }
   }
-  validatePass(countPossibleMoves)
+  // validatePass(countPossibleMoves);
 }
 
 //initialize game
@@ -147,25 +146,23 @@ function renderBoard() {
       : whiteScore > blackScore
       ? (displayText.textContent = `${white.name} wins!`)
       : (displayText.textContent = `${black.name} wins!`);
-      
   }
   showPossibleMoves();
 }
 
 //helper functions
-function validatePass(countPossibleMoves){
+function validatePass(countPossibleMoves) {
   // console.log(countPossibleMoves)
-  if (countPossibleMoves === 0){
-    switchTurns();
-    resetPossibleMoves();
-    renderBoard();
-  } 
-//   else{
-//    console.log('theres still moves left!')
+  // if (countPossibleMoves === 0) {
+  switchTurns();
+  resetPossibleMoves();
+  renderBoard();
+  // } else {
+  //   console.log("theres still moves left!");
 
-//    return
-//  }
- }
+  //   return;
+  // }
+}
 
 function getRowCol(boxEl) {
   let rowCol = boxEl.id.replace("data-", "");
@@ -399,7 +396,11 @@ function endGame() {
       gameboardValues.push(arr[i]);
     }
   });
-  if (gameboardValues.indexOf(0) == -1 || gameboardValues.indexOf(1) == -1 || gameboardValues.indexOf(2) == -1) {
+  if (
+    gameboardValues.indexOf(0) == -1 ||
+    gameboardValues.indexOf(1) == -1 ||
+    gameboardValues.indexOf(2) == -1
+  ) {
     return true;
   } else {
     return false;

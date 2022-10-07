@@ -197,8 +197,8 @@ button {
   font-size: 16px;
   opacity: 0.6;
 }
-.forfeit { 
-    width: auto;
+.forfeit {
+  width: auto;
 }
 .hide-one {
   display: none;
@@ -272,7 +272,8 @@ a {
   margin-right: 20px;
 }
 .endgame-display {
-  display: flex;
+  display: none;
+  /* display s/b FLEX */
   margin-top: 200px;
   height: 200px;
   width: 300px;
@@ -300,4 +301,111 @@ a {
   place-items: center;
   justify-content: center;
   font-size: large;
+}
+@media only screen and (max-width: 400px) {
+  body {
+    width: 100vw;
+    height: 100vw;
+    background-image: linear-gradient(to right, black, white);
+  }
+  header {
+    height: auto;
+    width: auto;
+  }
+  h1 {
+    margin-top: 5px;
+    font-size: 75%;
+    width: auto;
+  }
+  .elapsed-time-text {
+    font-size: 50%;
+    justify-content: center;
+  }
+  .options-container {
+    width: auto;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    height: auto;
+    margin: 5px;
+    padding: 3px;
+  }
+  .gameboard-container {
+    width: 100vw;
+  }
+  .gameboard {
+    width: auto;
+    height: auto;
+  }
+  .box {
+    width: 25px;
+    height: 25px;
+    font-size: 15px;
+    text-shadow: none;
+  }
+  .player-one-container {
+    height: auto;
+    width: auto;
+    justify-content: space-between;
+    margin-bottom: 5px;
+  }
+  #white-disc {
+    height: 20px;
+    width: 20px;
+    padding: 20px;
+    box-shadow: rgb(255 215 0) 0px 0px 20px 10px;
+    font-size: 20px;
+    margin-left: 10px;
+  }
+  .player-two-container {
+    height: 50px;
+    width: auto;
+    justify-content: space-between;
+  }
+  #black-disc {
+    height: 20px;
+    width: 20px;
+    padding: 20px;
+    box-shadow: rgb(255 215 0) 0px 0px 20px 10px;
+    font-size: 20px;
+    margin-right: 10px;
+  }
+
+  .turn {
+    font-size: 70%;
+    width: auto;
+    padding: 2px 6px;
+    margin: 7px 0px;
+  }
+  .gameboard-container {
+    width: auto;
+  }
+  button {
+    font-size: 50%;
+    padding: 3px 5px;
+  }
+  .rules {
+    padding: 3px 3px;
+    width: auto;
+  }
+  .pass {
+    width: auto;
+  }
+  #one {
+    height: fit-content;
+    width: fit-content;
+    font-size: 12px;
+  }
+  #two {
+    height: fit-content;
+    width: fit-content;
+    font-size: 12px;
+  }
+  footer {
+    width: 100vw;
+    font-size: 50%;
+    height: auto;
+  }
+  img {
+    height: 25px;
+  }
 }

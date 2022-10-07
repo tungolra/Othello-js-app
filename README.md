@@ -38,12 +38,12 @@ next steps
   - [x] display turn
   - [x] add pass function
     - [x] turn display should change
-    - [ ] should only be able to pass if no possible moves available
+    - [x] should only be able to pass if no possible moves available
   - [x] add reset game function (to go in game results display)
   - [x] add endgame function
-  - [ ] allow players to change name
+  - [x] allow players to change name
   - [ ] streamline getAffectedDiscs function
-  - [ ] replace reset game with forfeit game 
+  - [x] replace reset game with forfeit game 
 
 - [ ] CSS
 
@@ -51,6 +51,7 @@ next steps
   - [x] center board
   - [ ] change cursor at turn
   - [x] add pop up text for rules
+  - [ ] make mobile-friendly
 
 - [ ] HTML
 
@@ -65,12 +66,12 @@ next steps
   - [ ] add linkedin link
 
 - [ ] Extras
-  - [ ] animate flipping of discs
-  - [ ] option to add own name
+  - [x] animate flipping of discs
+  - [x] option to add own name
   - [ ] option to choose avatar
   - [ ] add fullscreen option
   - [ ] add AI 
-  - [ ] display timer
-  - [ ] set up github page
+  - [x] display timer
+  - [x] set up github page
 
 

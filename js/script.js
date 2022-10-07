@@ -14,7 +14,6 @@ const endGameDisplay = document.querySelector(".endgame-display");
 const displayText = document.querySelector(".display-text");
 const possibleMoves = document.querySelectorAll(".bool-true");
 
-
 //event listeners
 const gameBoard = document.querySelector(".gameboard");
 gameBoard.addEventListener("click", handleClick);
@@ -41,8 +40,6 @@ playerOneName.addEventListener("click", changeName);
 
 const newNameTwo = document.querySelector(".new-name-two");
 playerTwoName.addEventListener("click", changeName);
-
-
 
 //states
 let gameBoardInterface = [
@@ -513,6 +510,8 @@ function resetGame() {
   endGameDisplay.style.display = "none";
   createHTMLBoard();
   renderBoard();
+  resetStopwatch();
+  startTimer();
 }
 function endGame() {
   let gameboardValues = [];

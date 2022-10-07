@@ -272,8 +272,7 @@ a {
   margin-right: 20px;
 }
 .endgame-display {
-  display: none;
-  /* display s/b FLEX */
+  display: flex;
   margin-top: 200px;
   height: 200px;
   width: 300px;
@@ -324,7 +323,7 @@ a {
     justify-content: center;
   }
   .options-container {
-    width: auto;
+    width: 100vw;
     flex-wrap: wrap;
     justify-content: space-between;
     height: auto;
@@ -409,5 +408,13 @@ a {
   }
   img {
     height: 25px;
+  }
+  .rules-page{
+    font-size: 10px;
+    width: 100vw;
+    height: auto;
+    margin: none;
+    position:initial;
+    margin-top: 0
   }
 }

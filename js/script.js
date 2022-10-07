@@ -12,12 +12,11 @@ const playerTwoName = document.querySelector(".player-two");
 const endGameDisplay = document.querySelector(".endgame-display");
 const displayText = document.querySelector(".display-text");
 const possibleMoves = document.querySelectorAll(".bool-true");
-// timer
+
+// for timer function
 const elapsedTimeText = document.getElementsByClassName("elapsed-time-text")[0];
 let elapsedTimeIntervalRef;
 let startTime;
-
-// let affectedDiscsG;
 
 //event listeners
 const gameBoard = document.querySelector(".gameboard");
@@ -31,7 +30,6 @@ newGameButton.addEventListener("click", resetGame);
 newGameButton.addEventListener("click", startTimer);
 
 const passButton = document.querySelector(".pass");
-// passButton.addEventListener("click", passCounter);
 passButton.addEventListener("click", validatePass);
 
 const rulesPage = document.querySelector(".rules-page");
@@ -52,6 +50,7 @@ let gameBoardInterface = [
 let whiteScore = 0;
 let blackScore = 0;
 let turn = white.val;
+let countOfPossibleMoves = 0;
 
 function keepScore() {
   let whiteCount = 0;
@@ -88,6 +87,7 @@ function switchTurns() {
 }
 function showPossibleMoves() {
   let countPossibleMoves = 0;
+
   for (row = 0; row < gameBoardInterface.length; row++) {
     for (col = 0; col < gameBoardInterface.length; col++) {
       if (canClickSpot(row, col) && gameBoardInterface[row][col] == 0) {
@@ -98,7 +98,7 @@ function showPossibleMoves() {
       }
     }
   }
-  // validatePass(countPossibleMoves);
+  countOfPossibleMoves = countPossibleMoves;
 }
 
 // // adapted timer function from https://ralzohairi.medium.com/displaying-dynamic-elapsed-time-in-javascript-260fa0e95049
@@ -199,65 +199,38 @@ function createHTMLBoard(row = 8, col = 8) {
   }
 }
 
-function renderBoard() {
-  let boxIdx = 0;
-  for (row = 0; row < gameBoardInterface.length; row++) {
-    for (column = 0; column < gameBoardInterface.length; column++) {
-      let valueAtGBI = gameBoardInterface[row][column];
-      let boxElement = document.getElementsByClassName("box")[boxIdx];
 
-      if (valueAtGBI === 1) {
-        boxElement.innerHTML = "&#9898";
-      } else if (valueAtGBI === 2) {
-        boxElement.innerHTML = "&#9899";
-      }
-      boxIdx++;
-    }
-  }
-  if (turn === white.val) {
-    displayTurn.textContent = `It's ${white.name}'s turn!`;
-    blackDiscScore.style.boxShadow = "none";
-    whiteDiscScore.style.boxShadow = "0 0 40px 20px #FFD700";
-  } else {
-    displayTurn.textContent = `It's ${black.name}'s turn!`;
-    whiteDiscScore.style.boxShadow = "none";
-    blackDiscScore.style.boxShadow = "0 0 40px 20px #FFD700";
-  }
-  keepScore();
-  if (endGame() === true) {
-    endGameDisplay.style.display = "flex";
-    whiteScore === blackScore
-      ? (displayText.innerHTML = `It's a tie! <br> Game Duration: ${timeAndDateHandling.getElapsedTime(
-          startTime
-        )} 
-      `)
-      : whiteScore > blackScore
-      ? (displayText.innerHTML = `${
-          white.name
-        } wins! <br> Game Duration: ${timeAndDateHandling.getElapsedTime(
-          startTime
-        )}`)
-      : (displayText.innerHTML = `${
-          black.name
-        } wins! <br> Game Duration: ${timeAndDateHandling.getElapsedTime(
-          startTime
-        )}`);
-    resetStopwatch();
-  }
-  showPossibleMoves();
+function gameEndDisplay() {
+  endGameDisplay.style.display = "flex";
+  whiteScore === blackScore
+    ? (displayText.innerHTML = `It's a tie! <br> Game Duration: ${timeAndDateHandling.getElapsedTime(
+        startTime
+      )} 
+    `)
+    : whiteScore > blackScore
+    ? (displayText.innerHTML = `${
+        white.name
+      } wins! <br> Game Duration: ${timeAndDateHandling.getElapsedTime(
+        startTime
+      )}`)
+    : (displayText.innerHTML = `${
+        black.name
+      } wins! <br> Game Duration: ${timeAndDateHandling.getElapsedTime(
+        startTime
+      )}`);
 }
 
 //helper functions
 function validatePass() {
-  // if (affectedDiscsG !== 0) {
-  switchTurns();
-  resetPossibleMoves();
-  renderBoard();
-  // } else {
-  //   console.log("theres still moves left!");
-
-  //   return;
-  // }
+  if (countOfPossibleMoves == 0) {
+    switchTurns();
+    resetPossibleMoves();
+    renderBoard();
+  } else {
+    turn === white.val
+      ? (displayTurn.innerText = `${white.name} can still go!`)
+      : (displayTurn.innerText = `${black.name} can still go!`);
+  }
 }
 
 function getRowCol(boxEl) {
@@ -267,17 +240,71 @@ function getRowCol(boxEl) {
   return [row, col];
 }
 function canClickSpot(row, col) {
-  // let clickableBoxes = -1;
   let affectedDiscs = getAffectedDiscs(row, col);
   if (affectedDiscs.length == 0 && gameBoardInterface[row][col] === 0) {
     return false;
   } else {
-    // clickableBoxes++;
-    // console.log(clickableBoxes);
     return true;
   }
 }
 // functions
+function renderBoard() {
+  let boxIdx = 0;
+  for (row = 0; row < gameBoardInterface.length; row++) {
+    for (column = 0; column < gameBoardInterface.length; column++) {
+      let valueAtGBI = gameBoardInterface[row][column];
+      let boxElement = document.getElementsByClassName("box")[boxIdx];
+      if (valueAtGBI === 1) {
+        let whiteDisc = boxElement.innerHTML = "&#9898";
+        turnDiscs(boxElement, whiteDisc);
+      } else if (valueAtGBI === 2) {
+        let blackDisc = boxElement.innerHTML = "&#9899";
+        turnDiscs(boxElement, blackDisc);
+      }
+      boxIdx++;
+    }
+  }
+  turnPrompt();
+  keepScore();
+  if (endGame() === true) {
+    gameEndDisplay();
+    resetStopwatch();
+  }
+  showPossibleMoves();
+  if (countOfPossibleMoves === 0) {
+    validatePass();
+  }
+}
+function turnDiscs(boxElement, disc) {
+  let opacity = 0.4;
+  let anim_time = setInterval(function () {
+    if (opacity >= 1) {
+      clearInterval(anim_time);
+    }
+    boxElement.style.opacity = opacity;
+    boxElement.innerHTML = disc
+    opacity += opacity * 0.05;
+  }, 30);
+}
+function turnPrompt() {
+  if (turn === white.val) {
+    displayTurn.textContent = `It's ${white.name}'s turn!`;
+    blackDiscScore.style.boxShadow = "none";
+    whiteDiscScore.style.boxShadow = "0 0 40px 20px #FFD700";
+    displayTurn.style.backgroundColor = "white";
+    displayTurn.style.color = "black";
+    gameBoard.style.backgroundColor = "white"
+    gameBoard.style.border = "5px solid white"
+  } else {
+    displayTurn.textContent = `It's ${black.name}'s turn!`;
+    whiteDiscScore.style.boxShadow = "none";
+    blackDiscScore.style.boxShadow = "0 0 40px 20px #FFD700";
+    displayTurn.style.backgroundColor = "black";
+    displayTurn.style.color = "white";
+    gameBoard.style.backgroundColor = "black"
+    gameBoard.style.border = "5px solid black"
+  }
+}
 
 function handleClick(evt) {
   const boxEl = evt.target;
@@ -285,6 +312,7 @@ function handleClick(evt) {
   if (gameBoardInterface[row][col] !== 0) {
   } else if (canClickSpot(row, col) == true) {
     let affectedDiscs = getAffectedDiscs(row, col);
+
     flipDiscs(affectedDiscs);
     gameBoardInterface[row][col] = turn;
     switchTurns();

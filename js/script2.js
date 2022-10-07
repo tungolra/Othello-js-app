@@ -11,10 +11,10 @@ text2.addEventListener("keypress", changeName)
 
 
 function triggerChangeName () {
-    if (text1.style.display = "none"){
-        text1.style.display = "block"
+    if (playerOneName.style.display = "none"){
+        playerOneName.style.display = "block"
     }else {
-        text1.style.display = "none"
+        playerOneName.style.display = "none"
     }
 
 }

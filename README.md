@@ -42,6 +42,7 @@ next steps
   - [x] add endgame function
   - [ ] allow players to change name
   - [ ] streamline getAffectedDiscs function
+  - [ ] replace reset game with forfeit game 
 
 - [ ] CSS
 

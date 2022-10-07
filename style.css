@@ -16,19 +16,16 @@ header {
   justify-content: center;
   font-family: "Bungee Inline", cursive;
   font-size: 30px;
-
 }
 h1 {
-    display: flex;
-    justify-content: center;
-    width: 100vw;
+  display: flex;
+  justify-content: center;
+  width: 100vw;
 }
 .elapsed-time-text {
   display: flex;
   justify-content: center;
   width: 100vw;
-
-
 }
 h1 {
   margin: auto;
@@ -73,20 +70,6 @@ h3 {
   font-size: 18px;
 }
 
-/* .rules:hover + .rules-page {
-    display: flex;
-} */
-/* .rules div::after {
-    content: "";
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    margin-left: -5px;
-    border-width: 5px;
-    border-style: solid;
-    border-color: #555 transparent transparent transparent; */
-/* } */
-
 .reset-game {
   border-radius: 15px;
 }
@@ -109,19 +92,18 @@ h3 {
   place-items: center;
   justify-content: center;
   border-radius: 10px;
-  background-color: black;
+  background-color: white;
   box-shadow: 10px 10px rgba(0, 0, 0, 0.575);
-  grid-gap: 1px;
+  grid-gap: 2px;
+  border: 5px solid white;
 }
-.box:hover {
-  opacity: 0.6;
-}
+
 .box {
   /* display: flex; */
   justify-content: center;
 
   align-items: center;
-  border: 1px solid black;
+  border: 1px solid rgba(0, 0, 0, 0);
   width: 50px;
   height: 50px;
   background-color: rgb(0, 128, 0);
@@ -130,9 +112,24 @@ h3 {
   text-align: center;
   text-shadow: 3px 5px rgba(0, 0, 0, 0.375);
   user-select: none;
+  /* border-radius: 3px; */
 }
 .box:hover {
   cursor: pointer;
+  /* opacity: 0.6;
+  background-color: rgb(115, 0, 0); */
+}
+.box:nth-child(1){
+    border-top-left-radius: 7px;
+}
+.box:nth-child(8){
+    border-top-right-radius: 7x;
+}
+.box:nth-child(57){
+    border-bottom-left-radius: 7px;
+}
+.box:nth-child(64){
+    border-bottom-right-radius: 7px;
 }
 
 .player-one-container {
@@ -217,9 +214,6 @@ button {
   color: white;
   background-color: black;
 }
-.bool-true {
-}
-
 footer {
   display: flex;
   width: 100vw;

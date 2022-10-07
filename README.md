@@ -1,4 +1,5 @@
 # Othello
+https://tungolra.github.io/Othello/
 
 Board:
 HTML:

@@ -1,7 +1,8 @@
 // constants
-
+// // name display
 const white = { val: 1, name: "Player 1" };
 const black = { val: 2, name: "Player 2" };
+// //
 const boardLayer = document.querySelector(".boardLayer");
 const boxes = document.querySelectorAll(".box");
 const whiteDiscScore = document.querySelector("#white-disc");
@@ -13,10 +14,6 @@ const endGameDisplay = document.querySelector(".endgame-display");
 const displayText = document.querySelector(".display-text");
 const possibleMoves = document.querySelectorAll(".bool-true");
 
-// for timer function
-const elapsedTimeText = document.getElementsByClassName("elapsed-time-text")[0];
-let elapsedTimeIntervalRef;
-let startTime;
 
 //event listeners
 const gameBoard = document.querySelector(".gameboard");
@@ -24,6 +21,9 @@ gameBoard.addEventListener("click", handleClick);
 
 const resetGameButton = document.querySelector(".reset-game");
 resetGameButton.addEventListener("click", resetGame);
+
+const forfeit = document.querySelector(".forfeit");
+forfeit.addEventListener("click", forfeitGame);
 
 const newGameButton = document.querySelector(".new-game");
 newGameButton.addEventListener("click", resetGame);
@@ -35,6 +35,14 @@ passButton.addEventListener("click", validatePass);
 const rulesPage = document.querySelector(".rules-page");
 const rulesButton = document.querySelector(".rules");
 rulesButton.addEventListener("click", displayRulesPage);
+
+const newNameOne = document.querySelector(".new-name-one");
+playerOneName.addEventListener("click", changeName);
+
+const newNameTwo = document.querySelector(".new-name-two");
+playerTwoName.addEventListener("click", changeName);
+
+
 
 //states
 let gameBoardInterface = [
@@ -51,6 +59,7 @@ let whiteScore = 0;
 let blackScore = 0;
 let turn = white.val;
 let countOfPossibleMoves = 0;
+let gameForfeited = false;
 
 function keepScore() {
   let whiteCount = 0;
@@ -102,6 +111,9 @@ function showPossibleMoves() {
 }
 
 // // adapted timer function from https://ralzohairi.medium.com/displaying-dynamic-elapsed-time-in-javascript-260fa0e95049
+const elapsedTimeText = document.getElementsByClassName("elapsed-time-text")[0];
+let elapsedTimeIntervalRef;
+let startTime;
 function startTimer() {
   setStartTime();
   // Every second
@@ -199,27 +211,6 @@ function createHTMLBoard(row = 8, col = 8) {
   }
 }
 
-
-function gameEndDisplay() {
-  endGameDisplay.style.display = "flex";
-  whiteScore === blackScore
-    ? (displayText.innerHTML = `It's a tie! <br> Game Duration: ${timeAndDateHandling.getElapsedTime(
-        startTime
-      )} 
-    `)
-    : whiteScore > blackScore
-    ? (displayText.innerHTML = `${
-        white.name
-      } wins! <br> Game Duration: ${timeAndDateHandling.getElapsedTime(
-        startTime
-      )}`)
-    : (displayText.innerHTML = `${
-        black.name
-      } wins! <br> Game Duration: ${timeAndDateHandling.getElapsedTime(
-        startTime
-      )}`);
-}
-
 //helper functions
 function validatePass() {
   if (countOfPossibleMoves == 0) {
@@ -255,10 +246,10 @@ function renderBoard() {
       let valueAtGBI = gameBoardInterface[row][column];
       let boxElement = document.getElementsByClassName("box")[boxIdx];
       if (valueAtGBI === 1) {
-        let whiteDisc = boxElement.innerHTML = "&#9898";
+        let whiteDisc = (boxElement.innerHTML = "&#9898");
         turnDiscs(boxElement, whiteDisc);
       } else if (valueAtGBI === 2) {
-        let blackDisc = boxElement.innerHTML = "&#9899";
+        let blackDisc = (boxElement.innerHTML = "&#9899");
         turnDiscs(boxElement, blackDisc);
       }
       boxIdx++;
@@ -269,6 +260,7 @@ function renderBoard() {
   if (endGame() === true) {
     gameEndDisplay();
     resetStopwatch();
+    gameForfeited = false;
   }
   showPossibleMoves();
   if (countOfPossibleMoves === 0) {
@@ -282,7 +274,7 @@ function turnDiscs(boxElement, disc) {
       clearInterval(anim_time);
     }
     boxElement.style.opacity = opacity;
-    boxElement.innerHTML = disc
+    boxElement.innerHTML = disc;
     opacity += opacity * 0.05;
   }, 30);
 }
@@ -293,16 +285,16 @@ function turnPrompt() {
     whiteDiscScore.style.boxShadow = "0 0 40px 20px #FFD700";
     displayTurn.style.backgroundColor = "white";
     displayTurn.style.color = "black";
-    gameBoard.style.backgroundColor = "white"
-    gameBoard.style.border = "5px solid white"
+    gameBoard.style.backgroundColor = "white";
+    gameBoard.style.border = "5px solid white";
   } else {
     displayTurn.textContent = `It's ${black.name}'s turn!`;
     whiteDiscScore.style.boxShadow = "none";
     blackDiscScore.style.boxShadow = "0 0 40px 20px #FFD700";
     displayTurn.style.backgroundColor = "black";
     displayTurn.style.color = "white";
-    gameBoard.style.backgroundColor = "black"
-    gameBoard.style.border = "5px solid black"
+    gameBoard.style.backgroundColor = "black";
+    gameBoard.style.border = "5px solid black";
   }
 }
 
@@ -532,7 +524,8 @@ function endGame() {
   if (
     gameboardValues.indexOf(0) == -1 ||
     gameboardValues.indexOf(1) == -1 ||
-    gameboardValues.indexOf(2) == -1
+    gameboardValues.indexOf(2) == -1 ||
+    gameForfeited === true
   ) {
     return true;
   } else {
@@ -544,4 +537,45 @@ function displayRulesPage() {
   rulesPage.style.display === "none"
     ? (rulesPage.style.display = "initial")
     : (rulesPage.style.display = "none");
+}
+
+function gameEndDisplay() {
+  endGameDisplay.style.display = "flex";
+  whiteScore === blackScore
+    ? (displayText.innerHTML = `It's a tie! <br> Game Duration: ${timeAndDateHandling.getElapsedTime(
+        startTime
+      )} 
+    `)
+    : whiteScore > blackScore
+    ? (displayText.innerHTML = `${
+        white.name
+      } wins! <br> Game Duration: ${timeAndDateHandling.getElapsedTime(
+        startTime
+      )}`)
+    : (displayText.innerHTML = `${
+        black.name
+      } wins! <br> Game Duration: ${timeAndDateHandling.getElapsedTime(
+        startTime
+      )}`);
+}
+
+function forfeitGame() {
+  gameForfeited = true;
+  renderBoard();
+}
+function changeName(evt) {
+  if (evt.target.id == "one") {
+    newNameOne.style.display === "none"
+      ? (newNameOne.style.display = "flex")
+      : (newNameOne.style.display = "none");
+    white.name = newNameOne.value;
+    playerOneName.textContent = white.name;
+  }
+  if (evt.target.id == "two") {
+    newNameTwo.style.display === "none"
+      ? (newNameTwo.style.display = "flex")
+      : (newNameTwo.style.display = "none");
+    black.name = newNameTwo.value;
+    playerTwoName.textContent = black.name;
+  }
 }

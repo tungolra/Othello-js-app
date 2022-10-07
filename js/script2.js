@@ -1,26 +1,17 @@
+let white = { val: 1, name: "Player 1" };
+let black = { val: 2, name: "Player 2" };
 
-let playerOneName = document.querySelector('.player-one')
-let playerTwoName = document.querySelector('.player-two')
-playerOneName.addEventListener("click", triggerChangeName)
-playerTwoName.addEventListener("click", triggerChangeName)
-
-let text1 = document.querySelector('#change-name1')
-let text2 = document.getElementById('#change-name2')
-text1.addEventListener("keypress", changeName)
-text2.addEventListener("keypress", changeName)
+let newName = document.querySelector(".new-name");
+let playerOneName = document.querySelector(".player-one");
 
 
-function triggerChangeName () {
-    if (playerOneName.style.display = "none"){
-        playerOneName.style.display = "block"
-    }else {
-        playerOneName.style.display = "none"
-    }
+playerOneName.addEventListener("click", changeName);
 
+function changeName() {
+  newName.style.display === "none"
+    ? (newName.style.display = "flex")
+    : (newName.style.display = "none");
+  white.name = newName.value
+  playerOneName.textContent = white.name
+  console.log(white.name)
 }
-function changeName(){
-
-}
-
-const white = { val: 1, name: "Player 1" };
-const black = { val: 2, name: "Player 2" };

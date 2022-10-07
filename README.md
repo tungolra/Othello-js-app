@@ -68,3 +68,7 @@ next steps
 - add fullscreen option
 - add AI 
 - display timer
+
+bugs
+- if both players can't move, game does not end 
+- if no more white or black pieces on board before game ends, infinite loop 

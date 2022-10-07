@@ -12,6 +12,7 @@ const playerTwoName = document.querySelector(".player-two");
 const endGameDisplay = document.querySelector(".endgame-display");
 const displayText = document.querySelector(".display-text");
 const possibleMoves = document.querySelectorAll(".bool-true");
+// let affectedDiscsG;
 
 //event listeners
 const gameBoard = document.querySelector(".gameboard");
@@ -151,12 +152,11 @@ function renderBoard() {
 }
 
 //helper functions
-function validatePass(countPossibleMoves) {
-  // console.log(countPossibleMoves)
-  // if (countPossibleMoves === 0) {
-  switchTurns();
-  resetPossibleMoves();
-  renderBoard();
+function validatePass() {
+  // if (affectedDiscsG !== 0) {
+    switchTurns();
+    resetPossibleMoves();
+    renderBoard();
   // } else {
   //   console.log("theres still moves left!");
 
@@ -171,11 +171,13 @@ function getRowCol(boxEl) {
   return [row, col];
 }
 function canClickSpot(row, col) {
+  // let clickableBoxes = -1;
   let affectedDiscs = getAffectedDiscs(row, col);
-  // console.log(affectedDiscs)
   if (affectedDiscs.length == 0 && gameBoardInterface[row][col] === 0) {
     return false;
   } else {
+    // clickableBoxes++;
+    // console.log(clickableBoxes);
     return true;
   }
 }
@@ -198,6 +200,7 @@ function getAffectedDiscs(row, col) {
   //check to the right of click
   let affectedDiscs = [];
   var couldBeAffected = [];
+
   var columnIterator = col;
   while (columnIterator < 8) {
     columnIterator++;
@@ -231,6 +234,7 @@ function getAffectedDiscs(row, col) {
     } else {
       // if the adjacentValues is opposite colour and it's not a 0, then add to couldBeAffected
       let adjacentValuesboxElement = { row: row, col: columnIterator };
+
       couldBeAffected.push(adjacentValuesboxElement);
     }
   }
@@ -250,6 +254,7 @@ function getAffectedDiscs(row, col) {
     } else {
       // if the adjacentValues is opposite colour and it's not a 0, then add to couldBeAffected
       let adjacentValuesboxElement = { row: rowIterator, col: col };
+
       couldBeAffected.push(adjacentValuesboxElement);
     }
   }
@@ -269,6 +274,7 @@ function getAffectedDiscs(row, col) {
     } else {
       // if the adjacentValues is opposite colour and it's not a 0, then add to couldBeAffected
       let adjacentValuesboxElement = { row: rowIterator, col: col };
+
       couldBeAffected.push(adjacentValuesboxElement);
     }
   }
@@ -311,6 +317,7 @@ function getAffectedDiscs(row, col) {
     } else {
       // if the adjacentValues is opposite colour and it's not a 0, then add to couldBeAffected
       let adjacentValuesboxElement = { row: rowIterator, col: colIterator };
+
       couldBeAffected.push(adjacentValuesboxElement);
     }
   }
@@ -332,6 +339,7 @@ function getAffectedDiscs(row, col) {
     } else {
       // if the adjacentValues is opposite colour and it's not a 0, then add to couldBeAffected
       let adjacentValuesboxElement = { row: rowIterator, col: colIterator };
+
       couldBeAffected.push(adjacentValuesboxElement);
     }
   }
@@ -354,6 +362,7 @@ function getAffectedDiscs(row, col) {
     } else {
       // if the adjacentValues is opposite colour and it's not a 0, then add to couldBeAffected
       let adjacentValuesboxElement = { row: rowIterator, col: colIterator };
+
       couldBeAffected.push(adjacentValuesboxElement);
     }
   }
@@ -406,7 +415,6 @@ function endGame() {
     return false;
   }
 }
-// let possibleMove = document.querySelector()
 
 function displayRulesPage() {
   rulesPage.style.display === "none"

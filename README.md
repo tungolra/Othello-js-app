@@ -63,11 +63,12 @@ next steps
   - [ ] add linkedin link
 
 - [ ] Extras
-- [ ] animate flipping of discs
-- [ ] option to add own name
-- [ ] option to choose avatar
-- [ ] add fullscreen option
-- [ ] add AI 
-- [ ] display timer
+  - [ ] animate flipping of discs
+  - [ ] option to add own name
+  - [ ] option to choose avatar
+  - [ ] add fullscreen option
+  - [ ] add AI 
+  - [ ] display timer
+  - [ ] set up github page
 
 

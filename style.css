@@ -11,54 +11,67 @@ body {
   font-size: 18px;
 }
 header {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  font-family: "Bungee Inline", cursive;
+  font-size: 30px;
+
+}
+h1 {
     display: flex;
     justify-content: center;
-  
-    font-family: "Bungee Inline", cursive;
-    font-size: 30px;
-  }
-  h1 {
-    margin: auto;
-  }
+    width: 100vw;
+}
+.elapsed-time-text {
+  display: flex;
+  justify-content: center;
+  width: 100vw;
+
+
+}
+h1 {
+  margin: auto;
+}
 span {
-    color: white;
+  color: white;
 }
 .options-container {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
-    margin: auto;
-    align-items: center;
-    width: 700px;
-  }
-  .rules {
-    color: black;
-    border: 1px solid black;
-    padding: 10px 10px;
-    border-radius: 15px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  margin: auto;
+  align-items: center;
+  width: 700px;
+}
+.rules {
+  color: black;
+  border: 1px solid black;
+  padding: 10px 10px;
+  border-radius: 15px;
 }
 .rules-page {
-    display: none;
-    position: fixed;
-    right: 0;
-    bottom: 1;
-    margin-top: 650px;
-    margin-right: 100px;
-    color: white;
-    background-color: rgba(0, 128, 0, 0.647);
-    border: 3px solid white;
-    width: 400px;
-    padding: 5px 8px;
-    border-radius: 10px;
-    font-size: 12px;
-  }
-  .rules-page > p {
-    margin: 8px 0;
-  }
-  h3 {
-    color: black;
-    font-size: 18px;
-  }
+  display: none;
+  position: fixed;
+  right: 0;
+  bottom: 1;
+  margin-top: 650px;
+  margin-right: 100px;
+  color: white;
+  background-color: rgba(0, 128, 0, 0.647);
+  border: 3px solid white;
+  width: 400px;
+  padding: 5px 8px;
+  border-radius: 10px;
+  font-size: 12px;
+}
+.rules-page > p {
+  margin: 8px 0;
+}
+h3 {
+  color: black;
+  font-size: 18px;
+}
 
 /* .rules:hover + .rules-page {
     display: flex;
@@ -75,11 +88,8 @@ span {
 /* } */
 
 .reset-game {
-    border-radius: 15px;
-  }
-
-
-
+  border-radius: 15px;
+}
 
 .gameboard-container {
   display: flex;
@@ -207,7 +217,8 @@ button {
   color: white;
   background-color: black;
 }
-.bool-true {}
+.bool-true {
+}
 
 footer {
   display: flex;
@@ -220,13 +231,13 @@ footer {
   position: fixed;
   bottom: 0;
 }
-a { 
-    display: flex;
-    height: 50%;
-    margin-right: 20px;
+a {
+  display: flex;
+  height: 50%;
+  margin-right: 20px;
 }
 .endgame-display {
-  display: none;
+  display: flex;
   margin-top: 200px;
   height: 200px;
   width: 300px;

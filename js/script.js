@@ -12,6 +12,11 @@ const playerTwoName = document.querySelector(".player-two");
 const endGameDisplay = document.querySelector(".endgame-display");
 const displayText = document.querySelector(".display-text");
 const possibleMoves = document.querySelectorAll(".bool-true");
+// timer
+const elapsedTimeText = document.getElementsByClassName("elapsed-time-text")[0];
+let elapsedTimeIntervalRef;
+let startTime;
+
 // let affectedDiscsG;
 
 //event listeners
@@ -23,6 +28,7 @@ resetGameButton.addEventListener("click", resetGame);
 
 const newGameButton = document.querySelector(".new-game");
 newGameButton.addEventListener("click", resetGame);
+newGameButton.addEventListener("click", startTimer);
 
 const passButton = document.querySelector(".pass");
 // passButton.addEventListener("click", passCounter);
@@ -95,6 +101,84 @@ function showPossibleMoves() {
   // validatePass(countPossibleMoves);
 }
 
+// // adapted timer function from https://ralzohairi.medium.com/displaying-dynamic-elapsed-time-in-javascript-260fa0e95049
+function startTimer() {
+  setStartTime();
+  // Every second
+  elapsedTimeIntervalRef = setInterval(() => {
+    // Compute the elapsed time & display
+    //pass the actual record start time
+    elapsedTimeText.innerText = timeAndDateHandling.getElapsedTime(startTime);
+  }, 1000);
+}
+function setStartTime() {
+  startTime = new Date();
+}
+function resetStopwatch() {
+  // Clear interval
+  if (typeof elapsedTimeIntervalRef !== "undefined" || endGame() === true) {
+    clearInterval(elapsedTimeIntervalRef);
+    elapsedTimeIntervalRef = undefined;
+  }
+
+  // Reset elapsed time text
+  elapsedTimeText.innerText = "00:00";
+}
+var timeAndDateHandling = {
+  /** Computes the elapsed time since the moment the function is called in the format mm:ss or hh:mm:ss
+   * @param {String} startTime - start time to compute the elapsed time since
+   * @returns {String} elapsed time in mm:ss format or hh:mm:ss format if elapsed hours are 0.
+   */
+  getElapsedTime: function (startTime) {
+    // Record end time
+    let endTime = new Date();
+
+    // Compute time difference in milliseconds
+    let timeDiff = endTime.getTime() - startTime.getTime();
+
+    // Convert time difference from milliseconds to seconds
+    timeDiff = timeDiff / 1000;
+
+    // Extract integer seconds that dont form a minute using %
+    let seconds = Math.floor(timeDiff % 60); //ignoring uncomplete seconds (floor)
+
+    // Pad seconds with a zero if neccessary
+    let secondsAsString = seconds < 10 ? "0" + seconds : seconds + "";
+
+    // Convert time difference from seconds to minutes using %
+    timeDiff = Math.floor(timeDiff / 60);
+
+    // Extract integer minutes that don't form an hour using %
+    let minutes = timeDiff % 60; //no need to floor possible incomplete minutes, becase they've been handled as seconds
+
+    // Pad minutes with a zero if neccessary
+    let minutesAsString = minutes < 10 ? "0" + minutes : minutes + "";
+
+    // Convert time difference from minutes to hours
+    timeDiff = Math.floor(timeDiff / 60);
+
+    // Extract integer hours that don't form a day using %
+    let hours = timeDiff % 24; //no need to floor possible incomplete hours, becase they've been handled as seconds
+
+    // Convert time difference from hours to days
+    timeDiff = Math.floor(timeDiff / 24);
+
+    // The rest of timeDiff is number of days
+    let days = timeDiff;
+
+    let totalHours = hours + days * 24; // add days to hours
+    let totalHoursAsString =
+      totalHours < 10 ? "0" + totalHours : totalHours + "";
+
+    if (totalHoursAsString === "00") {
+      return minutesAsString + ":" + secondsAsString;
+    } else {
+      return totalHoursAsString + ":" + minutesAsString + ":" + secondsAsString;
+    }
+  },
+};
+// // end of timer function
+
 //initialize game
 window.onload = function () {
   createHTMLBoard();
@@ -143,10 +227,22 @@ function renderBoard() {
   if (endGame() === true) {
     endGameDisplay.style.display = "flex";
     whiteScore === blackScore
-      ? (displayText.textContent = `It's a tie!`)
+      ? (displayText.innerHTML = `It's a tie! <br> Game Duration: ${timeAndDateHandling.getElapsedTime(
+          startTime
+        )} 
+      `)
       : whiteScore > blackScore
-      ? (displayText.textContent = `${white.name} wins!`)
-      : (displayText.textContent = `${black.name} wins!`);
+      ? (displayText.innerHTML = `${
+          white.name
+        } wins! <br> Game Duration: ${timeAndDateHandling.getElapsedTime(
+          startTime
+        )}`)
+      : (displayText.innerHTML = `${
+          black.name
+        } wins! <br> Game Duration: ${timeAndDateHandling.getElapsedTime(
+          startTime
+        )}`);
+    resetStopwatch();
   }
   showPossibleMoves();
 }
@@ -154,9 +250,9 @@ function renderBoard() {
 //helper functions
 function validatePass() {
   // if (affectedDiscsG !== 0) {
-    switchTurns();
-    resetPossibleMoves();
-    renderBoard();
+  switchTurns();
+  resetPossibleMoves();
+  renderBoard();
   // } else {
   //   console.log("theres still moves left!");
 

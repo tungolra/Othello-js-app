@@ -303,10 +303,12 @@ a {
   font-size: large;
 }
 @media only screen and (max-width: 400px) {
+  html {
+    background-image: linear-gradient(to right, black, white);
+  }
   body {
     width: 100vw;
     height: 100vw;
-    background-image: linear-gradient(to right, black, white);
   }
   header {
     height: auto;

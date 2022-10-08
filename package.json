@@ -1,0 +1,29 @@
+{
+  "dependencies": {
+    "chai": "^4.3.7",
+    "mocha": "^10.2.0"
+  },
+  "name": "othello",
+  "description": "<img src=\"images/othello-img.png\">",
+  "version": "1.0.0",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "devDependencies": {
+    "@babel/preset-env": "^7.20.2"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tungolra/Othello.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tungolra/Othello/issues"
+  },
+  "homepage": "https://github.com/tungolra/Othello#readme"
+}

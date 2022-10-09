@@ -17,25 +17,22 @@ import {
 
 //constants
 export const endGameDisplay = document.querySelector(".endgame-display");
+export const gameBoard = document.querySelector(".gameboard");
+const resetGameButton = document.querySelector(".reset-game");
+const forfeit = document.querySelector(".forfeit");
+const newGameButton = document.querySelector(".new-game");
+const passButton = document.querySelector(".pass");
+const rulesButton = document.querySelector(".rules");
 
 // event listeners
-export const gameBoard = document.querySelector(".gameboard");
-gameBoard.addEventListener("click", handleClick);
-
-const resetGameButton = document.querySelector(".reset-game");
-resetGameButton.addEventListener("click", resetGame);
-
-const forfeit = document.querySelector(".forfeit");
-forfeit.addEventListener("click", forfeitGame);
-
-const newGameButton = document.querySelector(".new-game");
-newGameButton.addEventListener("click", resetGame);
-
-const passButton = document.querySelector(".pass");
-passButton.addEventListener("click", validatePass);
-
-const rulesButton = document.querySelector(".rules");
-rulesButton.addEventListener("click", displayRulesPage);
+document.addEventListener('DOMContentLoaded', function () {
+  gameBoard.addEventListener("click", handleClick);
+  resetGameButton.addEventListener("click", resetGame);
+  forfeit.addEventListener("click", forfeitGame);
+  newGameButton.addEventListener("click", resetGame);
+  passButton.addEventListener("click", validatePass);
+  rulesButton.addEventListener("click", displayRulesPage);
+})
 
 //states
 export let gameBoardInterface = [

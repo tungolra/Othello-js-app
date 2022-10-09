@@ -5,13 +5,17 @@ import { countOfPossibleMoves, displayPrompt } from "./ux.js";
 const playerOneName = document.querySelector(".player-one");
 const playerTwoName = document.querySelector(".player-two");
 const newNameOne = document.querySelector(".new-name-one");
-playerOneName.addEventListener("click", changeName);
-
 const newNameTwo = document.querySelector(".new-name-two");
-playerTwoName.addEventListener("click", changeName);
 export const white = { val: 1, name: "Player 1" };
 export const black = { val: 2, name: "Player 2" };
 export let turn = white.val;
+
+//listeners
+
+document.addEventListener('DOMContentLoaded', function () { 
+  playerOneName.addEventListener("click", changeName);
+  playerTwoName.addEventListener("click", changeName);
+})
 
 //helpers
 export function switchTurns() {

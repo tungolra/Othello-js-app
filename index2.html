@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="Ralph Tungol" content="Online Othello Game">
+    <title>Othello</title>
+    <link rel="stylesheet" href="mobile.css" />
+    <script defer src="js/ai.js"></script>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Bungee+Inline&display=swap");
+      @import url("https://fonts.googleapis.com/css2?family=Bungee+Inline&family=Silkscreen&display=swap");
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1><span>OTH</span>ELLO</h1>
+
+        <p class="elapsed-time-text">00:00</p>
+
+    </header>
+    <div class="options-container">
+      <button class="reset-game">Reset Game</button>
+      <button class="forfeit">forfeit</button>
+      <button class="pass">Pass</button>
+      <button class="rules">Rules</button>
+      <div class="rules-page">
+        <h3>Object of the Game</h3>
+        <p>
+          The goal is to have the most discs on the board by the end of the
+          game.
+        </p>
+
+        <h3>Game Play</h3>
+        <p>
+          Othello is a strategy board game played between 2 players. One player
+          plays black and the other white.
+        </p>
+        <p>
+          Then the game alternates between white and black unless there are no
+          more possible moves for the turn-taker. The player must hit PASS to
+          continue the game.
+        </p>
+        <p>**You cannot pass if there's still a possible move!**</p>
+        <p>
+          If neither player can make a move, then the game ends (either when the
+          board is fulled or if one player's pieces have all been turned.
+        </p>
+        <h3>Valid Moves</h3>
+        <p>
+          Possible moves will be highlighted on the board - it only shows when
+          there is an opposite piece adjacent to the turn-taker's piece that can
+          be connected to their own piece.
+        </p>
+        <p>
+          A disc may flip any number of discs in one or more rows in any
+          direction (horizontal, vertical, diagonal) so long as at the opposite
+          end of the played piece, there is the turn-taker's piece to connect
+          it.
+        </p>
+        <h3>End of the Game</h3>
+        <p>
+          The game ends when there are no more possible moves. The discs are
+          then counted and the player with the most pieces on the board wins!
+        </p>
+      </div>
+    </div>
+    <div class="gameboard-container">
+      <div class="player-one-container">
+        <button class="player-one" id="one">Player 1</button>
+        <div class="hide-one"> &#8592Click to Change Name</div>
+        <input class="new-name-one"  type="text" value="Player 1" maxlength="8" >
+        <div id="white-disc">0</div>
+      </div>
+      <div class="gameboard"></div>
+      <div class="endgame-display">
+        <div class="display-container">
+          <div class="display-text">Player vs Player!</div>
+          <button class="new-game">Start New Game</button>
+        </div>
+      </div>
+        <div class="turn"></div>
+      <div class="player-two-container">
+        <div id="black-disc">0</div>
+        <input class="new-name-two" type="text" value="Player 2" maxlength="8">
+        <button class="player-two" id="two">Player 2</button>
+        <div class="hide-two">Click to Change Name&#8594</div>
+      </div>
+    </div>
+    <footer>
+      <a href="https://github.com/tungolra/Othello"
+        ><img src="images/github-logo.png" alt="githublogo"
+      /></a>
+      <div>Created by: Ralph Tu&ntildegol</div>
+    </footer>
+  </body>
+</html>

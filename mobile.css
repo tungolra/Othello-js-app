@@ -1,0 +1,421 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  body {
+    width: auto;
+    height: auto;
+    background-image: linear-gradient(to right, black, white);
+    font-family: "Silkscreen", cursive;
+    font-size: 18px;
+  }
+  header {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-family: "Bungee Inline", cursive;
+    font-size: 30px;
+  }
+  h1 {
+    display: flex;
+    justify-content: center;
+    width: 100vw;
+  }
+  .elapsed-time-text {
+    display: flex;
+    justify-content: center;
+    width: 100vw;
+  }
+  h1 {
+    margin: auto;
+  }
+  span {
+    color: white;
+  }
+  .options-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    margin: auto;
+    align-items: center;
+    width: 700px;
+  }
+  .rules {
+    color: black;
+    border: 1px solid black;
+    padding: 10px 10px;
+    border-radius: 15px;
+  }
+  .rules-page {
+    display: none;
+    position: fixed;
+    right: 0;
+    bottom: 1;
+    margin-top: 650px;
+    margin-right: 100px;
+    color: white;
+    background-color: rgba(0, 128, 0, 0.647);
+    border: 3px solid white;
+    width: 400px;
+    padding: 5px 8px;
+    border-radius: 10px;
+    font-size: 12px;
+  }
+  .rules-page > p {
+    margin: 8px 0;
+  }
+  h3 {
+    color: black;
+    font-size: 18px;
+  }
+  
+  .reset-game {
+    border-radius: 15px;
+  }
+  
+  .gameboard-container {
+    display: flex;
+    flex-wrap: wrap;
+    margin: auto;
+    width: 500px;
+    justify-content: center;
+    border: 10px solid rgba(0, 0, 0, 0);
+  }
+  
+  .gameboard {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    width: auto;
+    height: auto;
+    place-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    background-color: white;
+    box-shadow: 10px 10px rgba(0, 0, 0, 0.575);
+    grid-gap: 2px;
+    border: 5px solid white;
+  }
+  
+  .box {
+    /* display: flex; */
+    justify-content: center;
+    align-items: center;
+    border: 1px solid rgba(0, 0, 0, 0);
+    width: 50px;
+    height: 50px;
+    background-color: rgb(0, 128, 0);
+    border-radius: 2px;
+    font-size: 40px;
+    text-align: center;
+    text-shadow: 3px 5px rgba(0, 0, 0, 0.375);
+    user-select: none;
+  }
+  .box:hover {
+    cursor: pointer;
+    /* opacity: 0.6;
+    background-color: rgb(115, 0, 0); */
+  }
+  .box:nth-child(1) {
+    border-top-left-radius: 7px;
+  }
+  .box:nth-child(8) {
+    border-top-right-radius: 7x;
+  }
+  .box:nth-child(57) {
+    border-bottom-left-radius: 7px;
+  }
+  .box:nth-child(64) {
+    border-bottom-right-radius: 7px;
+  }
+  
+  .player-one-container {
+    display: flex;
+    flex-direction: row;
+    width: 412px;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  .player-one {
+    color: black;
+    background-color: white;
+    padding: 5px 8px;
+    border-radius: 10px;
+    font-family: inherit;
+    width: 150px;
+    justify-content: center;
+    font-size: 18px;
+    opacity: 0.8;
+  }
+  
+  .new-name-one {
+    display: none;
+    width: 100px;
+    border-radius: 5px;
+    font-family: inherit;
+    margin: 0px 10px;
+  }
+  .new-name-two {
+    display: none;
+    width: 100px;
+    border-radius: 5px;
+    font-family: inherit;
+    margin: 0px 10px;
+  }
+  
+  .player-two-container {
+    display: flex;
+    flex-direction: row;
+    width: 412px;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .player-two {
+    color: white;
+    background-color: black;
+    padding: 5px 8px;
+    border-radius: 10px;
+    font-family: inherit;
+    width: 150px;
+    justify-content: center;
+    font-size: 18px;
+    order: 1;
+    opacity: 0.8;
+  }
+  
+  button:hover {
+    opacity: 1;
+    cursor: pointer;
+  }
+  button {
+    font-family: "Bungee Inline", cursive;
+    width: 75px;
+    border-radius: 10px;
+    padding: 5px;
+    font-size: 16px;
+    opacity: 0.6;
+  }
+  .forfeit {
+    width: auto;
+  }
+  .hide-one {
+    display: none;
+  }
+  .hide-two {
+    display: none;
+  }
+  .player-one:hover + .hide-one {
+    display: flex;
+    opacity: 0.5;
+    margin: 0px 10px;
+    font-size: 10px;
+  }
+  .player-two:hover + .hide-two {
+    display: flex;
+    opacity: 0.5;
+    order: 0;
+    font-size: 10px;
+    margin: 0px 10px;
+  }
+  
+  .turn {
+    margin: 20px 20px;
+    text-align: center;
+    width: 412px;
+    color: white;
+    background-color: black;
+    border-radius: 10px;
+  }
+  #white-disc {
+    display: flex;
+    border: 1px solid black;
+    border-radius: 50%;
+    text-align: center;
+    align-items: center;
+    height: 65px;
+    width: 65px;
+    justify-content: center;
+    font-size: 40px;
+    padding: 40px;
+    background-image: radial-gradient(rgb(255, 255, 255), rgba(52, 51, 51, 0.47));
+  }
+  #black-disc {
+    display: flex;
+    border: 1px solid black;
+    border-radius: 50%;
+    text-align: center;
+    align-items: center;
+    height: 65px;
+    width: 65px;
+    justify-content: center;
+    color: white;
+    font-size: 40px;
+    padding: 40px;
+    background-image: radial-gradient(rgb(0, 0, 0), rgba(127, 127, 127, 0.845));
+  }
+  footer {
+    display: flex;
+    width: 100vw;
+    height: 10vh;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(0, 0, 0);
+    color: white;
+    position: fixed;
+    bottom: 0;
+  }
+  a {
+    display: flex;
+    height: 50%;
+    margin-right: 20px;
+  }
+  .endgame-display {
+    display: flex;
+    margin-top: 200px;
+    height: 200px;
+    width: 300px;
+    border: 1px solid black;
+    background-color: grey;
+    position: absolute;
+    border-radius: 10px;
+    text-align: center;
+  }
+  .display-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .display-text {
+    display: flex;
+    margin: 20px 0 0 10px;
+    font-size: 20px;
+  }
+  .new-game {
+    display: flex;
+    width: 200px;
+    height: auto;
+    margin-bottom: 10px;
+    place-items: center;
+    justify-content: center;
+    font-size: large;
+  }
+  @media only screen and (max-width: 400px) {
+    html {
+      background-image: linear-gradient(to right, black, white);
+    }
+    body {
+      width: 100vw;
+      height: 100vw;
+    }
+    header {
+      height: auto;
+      width: auto;
+    }
+    h1 {
+      margin-top: 5px;
+      font-size: 75%;
+      width: auto;
+    }
+    .elapsed-time-text {
+      font-size: 50%;
+      justify-content: center;
+    }
+    .options-container {
+      width: 100vw;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      height: auto;
+      margin: 5px;
+      padding: 3px;
+    }
+    .gameboard-container {
+      width: 100vw;
+    }
+    .gameboard {
+      width: auto;
+      height: auto;
+    }
+    .box {
+      width: 25px;
+      height: 25px;
+      font-size: 15px;
+      text-shadow: none;
+    }
+    .player-one-container {
+      height: auto;
+      width: auto;
+      justify-content: space-between;
+      margin-bottom: 5px;
+    }
+    #white-disc {
+      height: 20px;
+      width: 20px;
+      padding: 20px;
+      box-shadow: rgb(255 215 0) 0px 0px 20px 10px;
+      font-size: 20px;
+      margin-left: 10px;
+    }
+    .player-two-container {
+      height: 50px;
+      width: auto;
+      justify-content: space-between;
+    }
+    #black-disc {
+      height: 20px;
+      width: 20px;
+      padding: 20px;
+      box-shadow: rgb(255 215 0) 0px 0px 20px 10px;
+      font-size: 20px;
+      margin-right: 10px;
+    }
+  
+    .turn {
+      font-size: 70%;
+      width: auto;
+      padding: 2px 6px;
+      margin: 7px 0px;
+    }
+    .gameboard-container {
+      width: auto;
+    }
+    button {
+      font-size: 50%;
+      padding: 3px 5px;
+    }
+    .rules {
+      padding: 3px 3px;
+      width: auto;
+    }
+    .pass {
+      width: auto;
+    }
+    #one {
+      height: fit-content;
+      width: fit-content;
+      font-size: 12px;
+    }
+    #two {
+      height: fit-content;
+      width: fit-content;
+      font-size: 12px;
+    }
+    footer {
+      width: 100vw;
+      font-size: 50%;
+      height: auto;
+    }
+    img {
+      height: 25px;
+    }
+    .rules-page{
+      font-size: 10px;
+      width: 100vw;
+      height: auto;
+      margin: none;
+      position:initial;
+      margin-top: 0
+    }
+  }
+  

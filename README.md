@@ -24,113 +24,101 @@ Players can also toggle the Rules button for a brief overview of how the game wo
 
 ##### HTML:
 
-- [ ] header container
-  - [ ] title of game
-  - [ ] game timer
-- [ ] options container
-  - [ ] reset game, forfeit game, pass, rules buttons
-- [ ] gameboard container
-  - [ ] player 1/2 container
-    - [ ] player name input
-    - [ ] player score div
-  - [ ] display prompt div
-- [ ] footer container
-  - [ ] have link to github repo 
-  - [ ] author div
+- [x] header container
+  - [x] title of game
+  - [x] game timer
+- [x] options container
+  - [x] reset game, forfeit game, pass, rules buttons
+- [x] gameboard container
+  - [x] player 1/2 container
+    - [x] player name input
+    - [x] player score div
+  - [x] display prompt div
+- [x] footer container
+  - [x] have link to github repo 
+  - [x] author div
 ##### CSS 
-- [ ] flexbox structure
+- [x] flexbox structure
 
 ##### JS:
 - Constants
-  - [ ] have array interface for board
-  - [ ] player1/2 score selector
-  - [ ] selector for display prompt
-  - [ ]
-  - [ ]
-  - [ ]
+  - [x] have array interface for board
+  - [x] player1/2 score selector
+  - [x] selector for display prompt
 
 - Event Listeners
-  - [ ] add listener when each box in the HTML is clicked
-  - [ ] add new game function for when game ends
-  - [ ] add function to toggle rules page
-  - [ ] 
-  - [ ]
-  - [ ]
-  - [ ]
+  - [x] add listener when each box in the HTML is clicked
+  - [x] add new game function for when game ends
+  - [x] add function to toggle rules page
+
 
 - States
-  - [ ] gameboard interface with middle 4 pieces filled
-  - [ ] score for white piece/score for black piece
-  - [ ] set turn to white piece
-  - [ ] endgame display selector
-  - [ ] selector for boxes with possible move class added
+  - [x] gameboard interface with middle 4 pieces filled
+  - [x] score for white piece/score for black piece
+  - [x] set turn to white piece
+  - [x] endgame display selector
+  - [x] selector for boxes with possible move class added
 
 - Initialize game
-  - [ ] Populate gameboard div with 64 divs to render HTML board
-    - [ ] give each box a class name of box and id of 'data-[div#]'
-  - [ ] onload function to create HTML board and initialize board
-  - [ ] initialize board to add prefilled pieces to HTML board by scanning for values != 0
+  - [x] Populate gameboard div with 64 divs to render HTML board
+    - [x] give each box a class name of box and id of 'data-[div#]'
+  - [x] onload function to create HTML board and initialize board
+  - [x] initialize board to add prefilled pieces to HTML board by scanning for values != 0
 
 - Functions
-  - [ ] create handleClick function
-    - [ ] pass event as parameter, parse box id with getRowCol function
-    - [ ] should only change values in gameboard interface (GBI) if the value in GBI is 0 & if it's a valid move 
-  - [ ] create canClickSpot helper function; create getAffectedDiscs helper function
-  - [ ]
-  - [ ]
-  - [ ]
-  - [ ]
-  - [ ]
-  - [ ]
-  - [ ]
-  - [ ]
-  - [ ]
+  - [x] create handleClick function
+    - [x] pass event as parameter, parse box id with getRowCol function
+    - [x] should only change values in gameboard interface (GBI) if the value in GBI is 0 & if it's a valid move 
+  - [x] create canClickSpot helper function; create getAffectedDiscs helper function
+  - [x] when valid move is made: 
+    - [x] create flipDiscs function to flip affected discs
+      - [x] parses list from getAffectedDiscs function into row and column positions
+      - [x] updates GBI to change values (1 or 2) to opposite values
+  - [x] create switchturns function to switch turns when valid move is made 
+  - [x] create renderBoard function to reinitialize board when GBI is updated 
+    - [x] renderboard should check if the game has ended, should reinitialize board to populate HTML, should update player scores
+    - [x] if game has ended, should run gameEndDisplay function
+  - [x] create endgame function; returns boolean
+    - [x] should check if there are no more 0 values on GBI, or if there are no more of one player's pieces on the board, or if the game has been forfeited
+  - [x] create gameEndDisplay function
+    - [x] gameEndDisplay should set style endGameDisplay to display over board
+    - [x] should display prompt of who won and option to start new game
+  - [x] create keepscore function 
+    - [x] should tally number of discs for each player on each turn 
+  - [x] add reset game function
+    - [x] should reset HTML gameboard and GBI to original values and intialize game
 
 - Helper Functions
-  - [ ] getRowCol function to yield array position relative to gameboard interface
-  - [ ] canClickSpot function to determine if the box selection is a possible move, returns boolean; calls on getAffectedDiscs helper function
-  - [ ] getAffectedDiscs function 
-  - [ ] validate pass function 
-
-
-
+  - [x] getRowCol function to yield array position relative to gameboard interface
+  - [x] canClickSpot function to determine if the box selection is a possible move, returns boolean
+    - [x] handleClick passes on the row and column of the selected box to canClickSpot to see if clicked box will overtake opposite piece
+    - [x] calls on getAffectedDiscs helper function that recursively passes the matrix position of boxes on the board that will flip discs
+  - [x] getAffectedDiscs function 
+    - [x] scans in all directions relative to click position up to the edges of the board for pieces that could be affected; 
+    - [x] collects list of affected discs to pass into flipDiscs function
+  - [x] validate pass function 
+  
 ##### JS Features
-- [ ] highlight possible moves on board
-- [ ] add forfeit button 
-- [ ] add change name option 
-- [ ] add timer 
-- [ ] add reset game function
-
-
-
-- [x] 
-- [ ] Moves:
-  - [ ] Each piece played must be laid adjacent to an opponent's piece
-  - [ ] so that the opponent's piece or a row of opponent's pieces is flanked by the new piece and another piece of the player's colour.
-- [ ] Move responses:
-  - [ ] all the pieces in all viable directions are turned over.
-- [x] winning condition:
-  - [x] The goal for each player is to make pieces of their colour constitute a majority of the pieces on the board at the end of the game, by turning over as many of their opponent's pieces as possible.
-  - [x] The game is over when neither player has a legal move (i.e. a move that captures at least one opposing piece) or when the board is full.
-
-functions
-
-- [ ] initialize function to set first four pieces on board in the array
-- [ ] handleClick function to:
-  - [ ] possible moves in the array
-    - [ ] boxes not clicked && selection is adjacent to opponent's piece
-  - [ ] switch players
-  - [ ] value of tokens must change
-- [ ] check status function
-  - [ ] runs every single play to see if there's no more options
-  - [ ] or if board is filled
+- [x] highlight possible moves on board
+  - [x] should highlight boxes on board that can be clicked
+  - [x] should reset depending on player turn
+- [x] add forfeit button 
+  - [x] should trigger endGameDisplay function to show results
+- [x] add change name option 
+  - [x] should be able to change name onclick 
+  - [x] should change values in display prompt when turns alternate
+- [x] add timer 
+  - [x] to be added to resetGame function to start and reset
+- [x] add highlightFlippedDiscs function
+  - [ ] should only highlight affected discs when flipped
+- [x] add rules to HTML and button to toggle rules display
 
 next steps
 
-- [ ] Readme.md
-  - [ ] edit pseudocode
-- [ ] JS
+- [x] Readme.md
+  - [x] edit pseudocode
 
+##### JS
   - [x] add scoreboard
   - [x] make visible possible moves
   - [x] display turn
@@ -144,16 +132,14 @@ next steps
   - [x] replace reset game with forfeit game
   - [ ] disable event listeners on game end / enable event listens on game start
 
-- [ ] CSS
-
+##### CSS
   - [x] add header
   - [x] center board
   - [ ] change cursor at turn
   - [x] add pop up text for rules
   - [ ] make mobile-friendly/ redo css with mobile-first approach
 
-- [ ] HTML
-
+##### HTML
   - [x] static button to start new game (calls on reset game function)
   - [x] button to reset game
   - [x] scoreboard div

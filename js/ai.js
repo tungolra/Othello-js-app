@@ -88,7 +88,11 @@ function resetPossibleMoves() {
   });
 }
 function switchTurns() {
-  turn === white.val ? (turn = black.val) : (turn = white.val);
+  if (turn === white.val) {
+    turn = black.val;
+  } else {
+    turn = white.val;
+  }
   resetPossibleMoves();
 }
 function showPossibleMoves() {
@@ -173,6 +177,8 @@ var timeAndDateHandling = {
 window.onload = function () {
   createHTMLBoard();
   initializeBoard();
+  turnPrompt(); // added
+  showPossibleMoves(); // added
 };
 function createHTMLBoard(row = 8, col = 8) {
   let counter = 0;
@@ -188,7 +194,7 @@ function createHTMLBoard(row = 8, col = 8) {
     }
   }
 }
-function initializeBoard(){
+function initializeBoard() {
   let boxIdx = 0;
   for (row = 0; row < gameBoardInterface.length; row++) {
     for (column = 0; column < gameBoardInterface.length; column++) {
@@ -207,16 +213,20 @@ function initializeBoard(){
 }
 
 //helper functions
+// let switchCount = 0
 function validatePass() {
+  //   let passed = 0
   if (countOfPossibleMoves == 0) {
     switchTurns();
     resetPossibleMoves();
     renderBoard();
+    // passed ++
   } else {
     turn === white.val
       ? (displayPrompt.innerText = `${white.name} can still go!`)
       : (displayPrompt.innerText = `${black.name} can still go!`);
   }
+  switchCount = passed;
 }
 
 function getRowCol(boxEl) {
@@ -380,6 +390,52 @@ function getAffectedDiscs(row, col) {
 }
 
 // functions
+
+// // ai functions
+
+function botMoves() {
+  resetPossibleMoves();
+  showPossibleMoves();
+  let possibleAIMoves = [];
+  for (row = 0; row < gameBoardInterface.length; row++) {
+    for (col = 0; col < gameBoardInterface.length; col++) {
+      if (canClickSpot(row, col) && gameBoardInterface[row][col] == 0) {
+        possibleAIMoves.push([row, col]);
+      }
+    }
+  }
+
+  if (countOfPossibleMoves > 0 || endGame() == false) {
+    botRandomMove(possibleAIMoves);
+    switchTurns();
+    showPossibleMoves();
+    turnPrompt();
+  } else if (endGame() == true) {
+    gameEndDisplay();
+    resetStopwatch();
+    gameForfeited = false;
+    return;
+  } else if (countOfPossibleMoves == 0) {
+    validatePass();
+    return;
+  }
+}
+function botRandomMove(possibleAIMoves) {
+  let botSelections = [];
+  possibleAIMoves.forEach(function (move) {
+    botSelections.push(move);
+  });
+  let selection =
+    botSelections[Math.floor(Math.random() * botSelections.length)];
+  let row = selection[0];
+  let col = selection[1];
+  gameBoardInterface[row][col] = turn;
+  let affectedDiscs = getAffectedDiscs(row, col);
+  flipDiscs(affectedDiscs);
+  initializeBoard();
+}
+// // end of ai
+
 function handleClick(evt) {
   const boxEl = evt.target;
   const [row, col] = getRowCol(boxEl);
@@ -389,21 +445,27 @@ function handleClick(evt) {
     let affectedDiscs = getAffectedDiscs(row, col);
     flipDiscs(affectedDiscs);
     gameBoardInterface[row][col] = turn;
-    switchTurns();
     renderBoard();
   }
 }
+
 function renderBoard() {
   keepScore();
   if (endGame() === true) {
     gameEndDisplay();
     resetStopwatch();
     gameForfeited = false;
-    return
+    return;
   }
-  initializeBoard()
+  initializeBoard();
   turnPrompt();
+  switchTurns(); // added
   showPossibleMoves();
+  if (turn == black.val) {
+    botMoves();
+  } else {
+    return;
+  }
   if (countOfPossibleMoves === 0) {
     validatePass();
   }
@@ -472,6 +534,7 @@ function resetGame() {
   resetStopwatch();
   startTimer();
 }
+
 function endGame() {
   let gameboardValues = [];
   gameBoardInterface.forEach(function (arr) {
@@ -484,6 +547,8 @@ function endGame() {
     gameboardValues.indexOf(1) == -1 ||
     gameboardValues.indexOf(2) == -1 ||
     gameForfeited === true
+    // ||
+    // switchCount == 2
   ) {
     return true;
   } else {
@@ -505,16 +570,10 @@ function gameEndDisplay() {
       )} 
     `)
     : whiteScore > blackScore
-    ? (endGameDisplayText.innerHTML = `${
-        white.name
-      } wins! <br> Game Duration: ${timeAndDateHandling.getElapsedTime(
-        startTime
-      )}`)
-    : (endGameDisplayText.innerHTML = `${
-        black.name
-      } wins! <br> Game Duration: ${timeAndDateHandling.getElapsedTime(
-        startTime
-      )}`);
+    ? // ? (endGameDisplayText.innerHTML = `${white.name} wins! <br> Game Duration: ${timeAndDateHandling.getElapsedTime(startTime)}`)
+      (endGameDisplayText.innerHTML = `${white.name} wins!`)
+    : // : (endGameDisplayText.innerHTML = `${black.name} wins! <br> Game Duration: ${timeAndDateHandling.getElapsedTime(startTime)}`);
+      (endGameDisplayText.innerHTML = `${black.name} wins!`);
 }
 
 function forfeitGame() {

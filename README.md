@@ -113,7 +113,7 @@ Players can also toggle the Rules button for a brief overview of how the game wo
   - [ ] should only highlight affected discs when flipped
 - [x] add rules to HTML and button to toggle rules display
 
-next steps
+### Next Steps
 
 - [x] Readme.md
   - [x] edit pseudocode

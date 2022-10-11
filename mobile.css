@@ -260,6 +260,11 @@
     width: 412px;
     justify-content: center;
   }
+  select { 
+    border-radius: 15px;
+    padding: 3px 3px;
+    font-family: inherit;
+  }
   footer {
     display: flex;
     width: 100vw;

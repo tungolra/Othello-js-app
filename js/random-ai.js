@@ -126,6 +126,30 @@ function changeName(evt) {
     playerTwoName.textContent = black.name;
   }
 }
+let playerType = document.querySelector("#player-type");
+playerType.addEventListener("change", changePlayerType);
+let head = document.querySelector("head");
+
+function changePlayerType(evt) {
+  console.log(evt.value)
+  if (playerType.value == "human") {
+    replaceScripts();
+    newScript.src = "js/script.js";
+  } else if (playerType.value == "random.ai") {
+    replaceScripts();
+    newScript.src = "js/random-ai.js";
+  } else {
+    return;
+  }
+}
+function replaceScripts() {
+  let currentScript = document.querySelector("script");
+  let newScript = document.createElement('script')
+  currentScript.remove();
+  newScript.defer = true;
+  head.appendChild(newScript);
+  resetGame();
+}
 
 // // adapted timer function from https://ralzohairi.medium.com/displaying-dynamic-elapsed-time-in-javascript-260fa0e95049
 const elapsedTimeText = document.getElementsByClassName("elapsed-time-text")[0];
@@ -552,7 +576,7 @@ function endGame() {
     gameboardValues.indexOf(1) == -1 ||
     gameboardValues.indexOf(2) == -1 ||
     gameForfeited === true
-) {
+  ) {
     return true;
   } else {
     return false;
@@ -568,15 +592,12 @@ function displayRulesPage() {
 function gameEndDisplay() {
   endGameDisplay.style.display = "flex";
   whiteScore === blackScore
-    ? 
-    // ? (endGameDisplayText.innerHTML = `It's a tie! <br> Game Duration: ${timeAndDateHandling.getElapsedTime(startTime)}`)
+    ? // ? (endGameDisplayText.innerHTML = `It's a tie! <br> Game Duration: ${timeAndDateHandling.getElapsedTime(startTime)}`)
       (endGameDisplayText.innerHTML = `It's a tie!`)
     : whiteScore > blackScore
-    ? 
-    // ? (endGameDisplayText.innerHTML = `${white.name} wins! <br> Game Duration: ${timeAndDateHandling.getElapsedTime(startTime)}`)
+    ? // ? (endGameDisplayText.innerHTML = `${white.name} wins! <br> Game Duration: ${timeAndDateHandling.getElapsedTime(startTime)}`)
       (endGameDisplayText.innerHTML = `${white.name} wins!`)
-    : 
-    // : (endGameDisplayText.innerHTML = `${black.name} wins! <br> Game Duration: ${timeAndDateHandling.getElapsedTime(startTime)}`);
+    : // : (endGameDisplayText.innerHTML = `${black.name} wins! <br> Game Duration: ${timeAndDateHandling.getElapsedTime(startTime)}`);
       (endGameDisplayText.innerHTML = `${black.name} wins!`);
 }
 

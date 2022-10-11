@@ -78,6 +78,7 @@ function keepScore() {
   whiteDiscScore.textContent = whiteScore;
   blackDiscScore.textContent = blackScore;
 }
+
 function resetPossibleMoves() {
   let list = [];
   document.querySelectorAll(".bool-true").forEach(function (div) {
@@ -87,10 +88,12 @@ function resetPossibleMoves() {
     document.getElementById(`${div.id}`).style.opacity = "1";
   });
 }
+
 function switchTurns() {
   turn === white.val ? (turn = black.val) : (turn = white.val);
   resetPossibleMoves();
 }
+
 function showPossibleMoves() {
   let countPossibleMoves = 0;
 
@@ -106,6 +109,7 @@ function showPossibleMoves() {
   }
   countOfPossibleMoves = countPossibleMoves;
 }
+
 function changeName(evt) {
   if (evt.target.id == "one") {
     newNameOne.style.display === "none"
@@ -188,7 +192,7 @@ function createHTMLBoard(row = 8, col = 8) {
     }
   }
 }
-function initializeBoard(){
+function initializeBoard() {
   let boxIdx = 0;
   for (row = 0; row < gameBoardInterface.length; row++) {
     for (column = 0; column < gameBoardInterface.length; column++) {
@@ -225,6 +229,7 @@ function getRowCol(boxEl) {
   let col = parseInt(rowCol[1]);
   return [row, col];
 }
+
 function canClickSpot(row, col) {
   let affectedDiscs = getAffectedDiscs(row, col);
   if (affectedDiscs.length == 0 && gameBoardInterface[row][col] === 0) {
@@ -233,6 +238,7 @@ function canClickSpot(row, col) {
     return true;
   }
 }
+
 function getAffectedDiscs(row, col) {
   let affectedDiscs = [];
   var couldBeAffected = [];
@@ -393,15 +399,16 @@ function handleClick(evt) {
     renderBoard();
   }
 }
+
 function renderBoard() {
   keepScore();
+  initializeBoard();
   if (endGame() === true) {
     gameEndDisplay();
     resetStopwatch();
     gameForfeited = false;
-    return
+    return;
   }
-  initializeBoard()
   turnPrompt();
   showPossibleMoves();
   if (countOfPossibleMoves === 0) {
@@ -472,6 +479,7 @@ function resetGame() {
   resetStopwatch();
   startTimer();
 }
+
 function endGame() {
   let gameboardValues = [];
   gameBoardInterface.forEach(function (arr) {

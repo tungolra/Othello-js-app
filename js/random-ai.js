@@ -213,20 +213,17 @@ function initializeBoard() {
 }
 
 //helper functions
-// let switchCount = 0
 function validatePass() {
-  //   let passed = 0
   if (countOfPossibleMoves == 0) {
     switchTurns();
     resetPossibleMoves();
-    renderBoard();
-    // passed ++
+    showPossibleMoves(); // added
+    turnPrompt(); // added
   } else {
     turn === white.val
       ? (displayPrompt.innerText = `${white.name} can still go!`)
       : (displayPrompt.innerText = `${black.name} can still go!`);
   }
-  switchCount = passed;
 }
 
 function getRowCol(boxEl) {
@@ -404,35 +401,43 @@ function botMoves() {
       }
     }
   }
-
-  if (countOfPossibleMoves > 0 || endGame() == false) {
+  if (endGame() == false) {
     botRandomMove(possibleAIMoves);
     switchTurns();
     showPossibleMoves();
     turnPrompt();
+    return;
   } else if (endGame() == true) {
     gameEndDisplay();
     resetStopwatch();
     gameForfeited = false;
     return;
-  } else if (countOfPossibleMoves == 0) {
-    validatePass();
-    return;
   }
 }
 function botRandomMove(possibleAIMoves) {
   let botSelections = [];
-  possibleAIMoves.forEach(function (move) {
-    botSelections.push(move);
-  });
-  let selection =
-    botSelections[Math.floor(Math.random() * botSelections.length)];
-  let row = selection[0];
-  let col = selection[1];
-  gameBoardInterface[row][col] = turn;
-  let affectedDiscs = getAffectedDiscs(row, col);
-  flipDiscs(affectedDiscs);
-  initializeBoard();
+  if (countOfPossibleMoves != 0) {
+    possibleAIMoves.forEach(function (move) {
+      botSelections.push(move);
+    });
+    let selection =
+      botSelections[Math.floor(Math.random() * botSelections.length)];
+    let row = selection[0];
+    let col = selection[1];
+    gameBoardInterface[row][col] = turn;
+    let affectedDiscs = getAffectedDiscs(row, col);
+    flipDiscs(affectedDiscs);
+    initializeBoard();
+    if (endGame() == true) {
+      gameEndDisplay();
+      resetStopwatch();
+      gameForfeited = false;
+      return;
+    }
+  } else {
+    validatePass();
+    return;
+  }
 }
 // // end of ai
 
@@ -547,9 +552,7 @@ function endGame() {
     gameboardValues.indexOf(1) == -1 ||
     gameboardValues.indexOf(2) == -1 ||
     gameForfeited === true
-    // ||
-    // switchCount == 2
-  ) {
+) {
     return true;
   } else {
     return false;
@@ -565,14 +568,15 @@ function displayRulesPage() {
 function gameEndDisplay() {
   endGameDisplay.style.display = "flex";
   whiteScore === blackScore
-    ? (endGameDisplayText.innerHTML = `It's a tie! <br> Game Duration: ${timeAndDateHandling.getElapsedTime(
-        startTime
-      )} 
-    `)
+    ? 
+    // ? (endGameDisplayText.innerHTML = `It's a tie! <br> Game Duration: ${timeAndDateHandling.getElapsedTime(startTime)}`)
+      (endGameDisplayText.innerHTML = `It's a tie!`)
     : whiteScore > blackScore
-    ? // ? (endGameDisplayText.innerHTML = `${white.name} wins! <br> Game Duration: ${timeAndDateHandling.getElapsedTime(startTime)}`)
+    ? 
+    // ? (endGameDisplayText.innerHTML = `${white.name} wins! <br> Game Duration: ${timeAndDateHandling.getElapsedTime(startTime)}`)
       (endGameDisplayText.innerHTML = `${white.name} wins!`)
-    : // : (endGameDisplayText.innerHTML = `${black.name} wins! <br> Game Duration: ${timeAndDateHandling.getElapsedTime(startTime)}`);
+    : 
+    // : (endGameDisplayText.innerHTML = `${black.name} wins! <br> Game Duration: ${timeAndDateHandling.getElapsedTime(startTime)}`);
       (endGameDisplayText.innerHTML = `${black.name} wins!`);
 }
 

@@ -130,25 +130,54 @@ let playerType = document.querySelector("#player-type");
 playerType.addEventListener("change", changePlayerType);
 let head = document.querySelector("head");
 
-function changePlayerType(evt) {
-  console.log(evt.value)
-  if (playerType.value == "human") {
-    replaceScripts();
-    newScript.src = "js/script.js";
-  } else if (playerType.value == "random.ai") {
-    replaceScripts();
-    newScript.src = "js/random-ai.js";
+let script = document.querySelector("script");
+function changePlayerType() {
+  let reload = true
+  if (playerType.value == "human" && reload) {
+    // window.location.reload()
+    script.src = "js/script.js";
+    reload = false
+  } else if (playerType.value == "random-ai" && reload) {
+    // window.location.reload()
+    script.src = "js/random-ai.js";
+    reload = false
   } else {
     return;
   }
 }
+let newScript = document.createElement('script')
 function replaceScripts() {
-  let currentScript = document.querySelector("script");
-  let newScript = document.createElement('script')
-  currentScript.remove();
-  newScript.defer = true;
-  head.appendChild(newScript);
-  resetGame();
+  // console.log(currentScript.src)
+  // let reload = true;
+  // // window.location.reload()
+  // if (reload){
+  //   // window.location.reload()
+  //   currentScript.remove();
+  //   console.log(currentScript)
+  //   newScript.defer = true;
+  //   head.appendChild(newScript);
+  //   reload = false
+  //   console.log(reload)
+  // } 
+  // else { 
+  //   let currentScript = document.querySelector("script");
+  //   let newScript = document.createElement('script')
+  //   window.location.reload()
+  //   currentScript.remove();
+  //   console.log(currentScript)
+  //   newScript.defer = false;
+  //   head.appendChild(newScript);
+  //   reload = true
+  //   console.log(reload)
+  // }
+  // if (script.src == 'http://192.168.2.201:64949/js/random-ai.js' && reload){
+  //   window.location.reload()
+  //   script.src = "http://192.168.2.201:64949/js/script.js"
+  //   reload = false
+  // } else{
+  //   script.src = 'http://192.168.2.201:64949/js/random-ai.js'
+  // }
+
 }
 
 // // adapted timer function from https://ralzohairi.medium.com/displaying-dynamic-elapsed-time-in-javascript-260fa0e95049
@@ -226,10 +255,10 @@ function initializeBoard() {
       let boxElement = document.getElementsByClassName("box")[boxIdx];
       if (valueAtGBI === 1) {
         let whiteDisc = (boxElement.innerHTML = "&#9898");
-        // highlightFlippedDiscs(boxElement, whiteDisc);
+        highlightFlippedDiscs(boxElement, whiteDisc);
       } else if (valueAtGBI === 2) {
         let blackDisc = (boxElement.innerHTML = "&#9899");
-        // highlightFlippedDiscs(boxElement, blackDisc);
+        highlightFlippedDiscs(boxElement, blackDisc);
       }
       boxIdx++;
     }
@@ -413,11 +442,17 @@ function getAffectedDiscs(row, col) {
 // functions
 
 // // ai functions
+// setTimeout(() => {console.log("this is the first message")}, 5000);
+// setTimeout(() => {console.log("this is the second message")}, 3000);
+// setTimeout(() => {console.log("this is the third message")}, 1000);
 
 function botMoves() {
+  let possibleAIMoves = [];
+  const timeout = () => setTimeout((botRandomMove(possibleAIMoves)), 5000) 
+  // console.log('reached')
   resetPossibleMoves();
   showPossibleMoves();
-  let possibleAIMoves = [];
+  
   for (row = 0; row < gameBoardInterface.length; row++) {
     for (col = 0; col < gameBoardInterface.length; col++) {
       if (canClickSpot(row, col) && gameBoardInterface[row][col] == 0) {
@@ -426,7 +461,8 @@ function botMoves() {
     }
   }
   if (endGame() == false) {
-    botRandomMove(possibleAIMoves);
+    timeout()
+    // botRandomMove(possibleAIMoves);
     switchTurns();
     showPossibleMoves();
     turnPrompt();
@@ -439,6 +475,7 @@ function botMoves() {
   }
 }
 function botRandomMove(possibleAIMoves) {
+  console.log(`set timeout called`)
   let botSelections = [];
   if (countOfPossibleMoves != 0) {
     possibleAIMoves.forEach(function (move) {
@@ -501,15 +538,15 @@ function renderBoard() {
 }
 
 function highlightFlippedDiscs(boxElement, disc) {
-  // let opacity = 0.4;
-  // let anim_time = setInterval(function () {
-  //   if (opacity >= 1) {
-  //     clearInterval(anim_time);
-  //   }
-  //   boxElement.style.opacity = opacity;
-  //   boxElement.innerHTML = disc;
-  //   opacity += opacity * 0.05;
-  // }, 30);
+  let opacity = 0.4;
+  let anim_time = setInterval(function () {
+    if (opacity >= 1) {
+      clearInterval(anim_time);
+    }
+    boxElement.style.opacity = opacity;
+    boxElement.innerHTML = disc;
+    opacity += opacity * 0.05;
+  }, 30);
 }
 
 function turnPrompt() {

@@ -1,3 +1,23 @@
+// function replaceScripts() {
+//   let currentScript = document.querySelector("script");
+//   let newScript = document.createElement('script')
+//   let reload = true;
+//   window.location.reload()
+//   if (reload){
+//     window.location.reload()
+//     currentScript.remove();
+//     newScript.defer = true;
+//     newScript.src = "js/script.js"
+//     head.appendChild(newScript);
+//     reload = true
+//   } else { 
+//     window.location.reload()
+//     currentScript.remove();
+//     newScript.defer = true;
+//     newScript.src = "js/random-ai.js"
+//     head.appendChild(newScript);
+//     reload = false
+//   }
 // constants
 // // name display
 const white = { val: 1, name: "Player 1" };

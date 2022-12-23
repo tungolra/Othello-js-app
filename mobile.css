@@ -3,10 +3,13 @@
     margin: 0;
     padding: 0;
   }
+  html {
+    background-image: linear-gradient(to right, black, white);
+  }
   body {
     width: auto;
     height: auto;
-    background-image: linear-gradient(to right, black, white);
+    /* background-image: linear-gradient(to right, black, white); */
     font-family: "Silkscreen", cursive;
     font-size: 18px;
   }
@@ -121,7 +124,7 @@
     border-top-left-radius: 7px;
   }
   .box:nth-child(8) {
-    border-top-right-radius: 7x;
+    border-top-right-radius: 7px;
   }
   .box:nth-child(57) {
     border-bottom-left-radius: 7px;

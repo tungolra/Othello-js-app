@@ -53,7 +53,7 @@ Players can also toggle the Rules button for a brief overview of how the game wo
 
 
 - States
-  - [x] gameboard interface with middle 4 pieces filled
+  - [x] gameboard interface with middle 4 pieces filledde 
   - [x] score for white piece/score for black piece
   - [x] set turn to white piece
   - [x] endgame display selector

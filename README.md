@@ -16,7 +16,11 @@ First, I would modularize my JS files through ES6 and babel-loader. I'd create s
 
 Second, I'd build the app with a mobile-first approach. Having initially styled the app for desktop, the process became convoluted when making it responsive for mobile and tablet views. 
 
-Third, I'd build the app from a TDD approach. There were many times I would create a new UX function that would crash the game. Manually tracing the errors was time-consuming and arduous. For a beginner programmer, applying these practices ahead of time would likely have aided in my learning, rather than being stuck on preventable, minute problems. That said, it was an experience that had good take-aways. 
+Third, there is much repeated code in my getAffectedDiscs function. I would refactor this to better adhere to DRY-programming. 
+
+Fourth, I've implemented a game-mode that allows users to play with an AI. It is functional, but it works only in it's own HTML file. Due to time constraints, I did not complete it's integration into my main index.html file. 
+
+Lastly, I'd build the app from a TDD approach. There were many times I would create a new UX function that would crash the game. Manually tracing the errors was time-consuming and arduous. For a beginner programmer, applying these practices ahead of time would likely have aided in my learning, rather than being stuck on preventable, minute problems. That said, it was an experience that had good take-aways. 
 
 ### Introduction
 

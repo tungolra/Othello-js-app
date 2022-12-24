@@ -1,23 +1,3 @@
-// function replaceScripts() {
-//   let currentScript = document.querySelector("script");
-//   let newScript = document.createElement('script')
-//   let reload = true;
-//   window.location.reload()
-//   if (reload){
-//     window.location.reload()
-//     currentScript.remove();
-//     newScript.defer = true;
-//     newScript.src = "js/script.js"
-//     head.appendChild(newScript);
-//     reload = true
-//   } else { 
-//     window.location.reload()
-//     currentScript.remove();
-//     newScript.defer = true;
-//     newScript.src = "js/random-ai.js"
-//     head.appendChild(newScript);
-//     reload = false
-//   }
 // constants
 // // name display
 const white = { val: 1, name: "Player 1" };
@@ -220,10 +200,8 @@ function initializeBoard() {
       let boxElement = document.getElementsByClassName("box")[boxIdx];
       if (valueAtGBI === 1) {
         let whiteDisc = (boxElement.innerHTML = "&#9898");
-        // highlightFlippedDiscs(boxElement, whiteDisc);
       } else if (valueAtGBI === 2) {
         let blackDisc = (boxElement.innerHTML = "&#9899");
-        // highlightFlippedDiscs(boxElement, blackDisc);
       }
       boxIdx++;
     }
@@ -434,18 +412,6 @@ function renderBoard() {
   if (countOfPossibleMoves === 0) {
     validatePass();
   }
-}
-
-function highlightFlippedDiscs(boxElement, disc) {
-  // let opacity = 0.4;
-  // let anim_time = setInterval(function () {
-  //   if (opacity >= 1) {
-  //     clearInterval(anim_time);
-  //   }
-  //   boxElement.style.opacity = opacity;
-  //   boxElement.innerHTML = disc;
-  //   opacity += opacity * 0.05;
-  // }, 30);
 }
 
 function turnPrompt() {

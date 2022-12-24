@@ -4,10 +4,10 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="Ralph Tungol" content="Online Othello Game">
+    <meta name="Ralph Tungol" content="Online Othello Game" />
     <title>Othello</title>
     <link rel="stylesheet" href="style.css" />
-    <script defer src="js/script.js"></script>
+    <script type="module" defer src="js/init.js"></script>
     <style>
       @import url("https://fonts.googleapis.com/css2?family=Bungee+Inline&display=swap");
       @import url("https://fonts.googleapis.com/css2?family=Bungee+Inline&family=Silkscreen&display=swap");
@@ -17,8 +17,7 @@
     <header>
       <h1><span>OTH</span>ELLO</h1>
 
-        <p class="elapsed-time-text">00:00</p>
-
+      <p class="elapsed-time-text">00:00</p>
     </header>
     <div class="options-container">
       <button class="reset-game">Reset Game</button>
@@ -69,8 +68,13 @@
     <div class="gameboard-container">
       <div class="player-one-container">
         <button class="player-one" id="one">Player 1</button>
-        <div class="hide-one"> &#8592Click to Change Name</div>
-        <input class="new-name-one"  type="text" value="Player 1" maxlength="8" >
+        <div class="hide-one">&#8592;Click to Change Name</div>
+        <input
+          class="new-name-one"
+          type="text"
+          value="Player 1"
+          maxlength="8"
+        />
         <div id="white-disc">0</div>
       </div>
       <div class="gameboard"></div>
@@ -80,19 +84,25 @@
           <button class="new-game">Start New Game</button>
         </div>
       </div>
-        <div class="turn"></div>
+      <div class="turn"></div>
       <div class="player-two-container">
         <div id="black-disc">0</div>
-        <input class="new-name-two" type="text" value="Player 2" maxlength="8">
+        <input
+          class="new-name-two"
+          type="text"
+          value="Player 2"
+          maxlength="8"
+        />
         <button class="player-two" id="two">Player 2</button>
-        <div class="hide-two">Click to Change Name&#8594</div>
+        <div class="hide-two">Click to Change Name&#8594;</div>
       </div>
     </div>
     <footer>
       <a href="https://github.com/tungolra/Othello"
         ><img src="images/github-logo.png" alt="githublogo"
       /></a>
-      <div>Created by: Ralph Tu&ntildegol</div>
+      <div>Created by: Ralph Tu&ntilde;gol</div>
     </footer>
+
   </body>
 </html>
